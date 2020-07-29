@@ -10,6 +10,7 @@
     <version>1.0</version>
     <modules>
         <module>crm-core</module>
+        <module>crm-model</module>
     </modules>
 
     <parent>

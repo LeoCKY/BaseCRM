@@ -29,15 +29,15 @@ public class UploadUtil {
     /**
      * 按照当日创建文件夹
      */
-    @Value("${lenosp.isDayType}")
+    @Value("${upload.isDayType}")
     private boolean isDayType;
     /**
      * 自定义文件路径
      */
-    @Value("${lenosp.uploadPath}")
+    @Value("${upload.uploadPath}")
     private String uploadPath;
 
-    @Value("${lenosp.imagePath}")
+    @Value("${upload.imagePath}")
     private String imagePath;
 
     public static final String IMAGE_SUFFIX = "bmp,jpg,png,gif,jpeg";
