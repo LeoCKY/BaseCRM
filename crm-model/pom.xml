@@ -11,5 +11,13 @@
 
     <artifactId>crm-model</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.cky</groupId>
+            <artifactId>crm-core</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+    </dependencies>
 
 </project>

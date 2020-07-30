@@ -1,8 +1,9 @@
 CREATE TABLE `tb_user` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `account` varchar(64),
+  `account` varchar(255),
   `password` varchar(255),
   `salt` varchar(64),
+  `status` int,
   `version` int,
   `create_user` int,
   `create_date` timestamp,
@@ -10,7 +11,7 @@ CREATE TABLE `tb_user` (
   `update_user` int,
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` boolean
+  `is_del` tinyint
 );
 
 CREATE TABLE `tb_user_info` (
@@ -18,11 +19,12 @@ CREATE TABLE `tb_user_info` (
   `user_id` int,
   `f_name` varchar(255),
   `l_name` varchar(255),
+  `email` varchar(255),
   `phone` varchar(255),
   `birthday` timestamp,
   `id_num` varchar(255),
-  `country_code` varchar(64),
-  `city_code` varchar(64),
+  `country_code` varchar(32),
+  `city_code` varchar(32),
   `address` varchar(128),
   `postcode` int(32),
   `version` int,
@@ -32,7 +34,7 @@ CREATE TABLE `tb_user_info` (
   `update_user` int,
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` boolean
+  `is_del` tinyint
 );
 
 CREATE TABLE `tb_user_role` (
@@ -51,7 +53,7 @@ CREATE TABLE `tb_role` (
   `update_user` int,
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` boolean
+  `is_del` tinyint
 );
 
 CREATE TABLE `tb_organization` (
@@ -67,7 +69,7 @@ CREATE TABLE `tb_organization` (
   `update_user` int,
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` boolean
+  `is_del` tinyint
 );
 
 CREATE TABLE `tb_org_permission` (
@@ -92,7 +94,7 @@ CREATE TABLE `tb_permission` (
   `update_user` int,
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` boolean
+  `is_del` tinyint
 );
 
 CREATE TABLE `tb_menu` (
@@ -109,13 +111,13 @@ CREATE TABLE `tb_menu` (
   `update_user` int,
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` boolean
+  `is_del` tinyint
 );
 
 CREATE TABLE `tb_country` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
-  `code` varchar(64),
+  `code` varchar(32),
   `version` int,
   `create_user` int,
   `create_date` timestamp,
@@ -123,14 +125,29 @@ CREATE TABLE `tb_country` (
   `update_user` int,
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` boolean
+  `is_del` tinyint
+);
+
+CREATE TABLE `tb_state` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `country_id` int,
+  `name` varchar(255),
+  `code` varchar(32),
+  `version` int,
+  `create_user` int,
+  `create_date` timestamp,
+  `create_ip` varchar(64),
+  `update_user` int,
+  `update_date` timestamp,
+  `update_ip` varchar(64),
+  `is_del` tinyint
 );
 
 CREATE TABLE `tb_city` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `country_id` int,
+  `state_id` int,
   `name` varchar(255),
-  `code` varchar(64),
+  `code` varchar(32),
   `version` int,
   `create_user` int,
   `create_date` timestamp,
@@ -138,7 +155,7 @@ CREATE TABLE `tb_city` (
   `update_user` int,
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` boolean
+  `is_del` tinyint
 );
 
 CREATE TABLE `tb_sys_code` (
@@ -154,14 +171,10 @@ CREATE TABLE `tb_sys_code` (
   `update_user` int,
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` boolean
+  `is_del` tinyint
 );
 
 ALTER TABLE `tb_user_info` ADD FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`id`);
-
-ALTER TABLE `tb_user_info` ADD FOREIGN KEY (`country_code`) REFERENCES `tb_country` (`id`);
-
-ALTER TABLE `tb_user_info` ADD FOREIGN KEY (`city_code`) REFERENCES `tb_city` (`id`);
 
 ALTER TABLE `tb_user_role` ADD FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`id`);
 
@@ -181,6 +194,8 @@ ALTER TABLE `tb_permission` ADD FOREIGN KEY (`menu_id`) REFERENCES `tb_menu` (`i
 
 ALTER TABLE `tb_menu` ADD FOREIGN KEY (`parent_id`) REFERENCES `tb_menu` (`id`);
 
-ALTER TABLE `tb_city` ADD FOREIGN KEY (`country_id`) REFERENCES `tb_country` (`id`);
+ALTER TABLE `tb_state` ADD FOREIGN KEY (`country_id`) REFERENCES `tb_country` (`id`);
+
+ALTER TABLE `tb_city` ADD FOREIGN KEY (`state_id`) REFERENCES `tb_state` (`id`);
 
 ALTER TABLE `tb_sys_code` ADD FOREIGN KEY (`parent_id`) REFERENCES `tb_sys_code` (`id`);
