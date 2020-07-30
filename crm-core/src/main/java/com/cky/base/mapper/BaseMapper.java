@@ -6,7 +6,7 @@ import tk.mybatis.mapper.common.IdsMapper;
 import java.io.Serializable;
 import java.util.List;
 
-public interface BaseMapper<T, E extends Serializable> extends tk.mybatis.mapper.common.Mapper<T>, IdsMapper<T> {
+public interface BaseMapper<T, E extends Serializable> extends tk.mybatis.mapper.common.Mapper<T>, IdsMapper<T>,MySQLMapper<T> {
 
     /*
      *//**
