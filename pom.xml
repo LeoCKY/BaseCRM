@@ -11,6 +11,7 @@
     <modules>
         <module>crm-core</module>
         <module>crm-model</module>
+        <module>crm-provider</module>
     </modules>
 
     <parent>

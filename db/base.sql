@@ -59,6 +59,7 @@ CREATE TABLE `tb_role` (
 CREATE TABLE `tb_organization` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `prent_id` int,
+  `prent_ids` varchar(255),
   `name` varchar(128),
   `type` varchar(64),
   `description` varchar(255),
