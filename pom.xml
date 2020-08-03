@@ -13,6 +13,7 @@
         <module>crm-model</module>
         <module>crm-provider</module>
         <module>crm-web</module>
+        <module>crm-sys</module>
     </modules>
 
     <parent>
@@ -229,6 +230,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.41</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>4.0.12</version>
         </dependency>
     </dependencies>
 
