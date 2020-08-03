@@ -12,7 +12,7 @@ public class BasePo {
     private int version;
 
     @Column(name = "create_user")
-    private Integer createUser;
+    private String createUser;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -21,5 +21,5 @@ public class BasePo {
     private String createIp;
 
     @Column(name = "is_del")
-    private boolean isDel;
+    private Boolean isDel;
 }

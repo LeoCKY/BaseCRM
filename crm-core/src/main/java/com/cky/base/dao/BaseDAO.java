@@ -9,6 +9,8 @@ public interface BaseDAO<T, E extends Serializable> {
 
     public List<T> select(T t);
 
+    public List<T> selectAll();
+
     public List<T> selectByIds(String ids);
 
     public int selectCount(T t);
@@ -57,5 +59,5 @@ public interface BaseDAO<T, E extends Serializable> {
 
     public List<T> selectByRowBounds(T t, RowBounds rowBounds);
 
-    public String showAll(T t);
+    public List<T> showAll(T t);
 }

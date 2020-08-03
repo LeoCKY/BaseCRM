@@ -1,22 +1,22 @@
 CREATE TABLE `tb_user` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `account` varchar(255),
+  `id` varchar(36) PRIMARY KEY,
+  `account` varchar(255) unique,
   `password` varchar(255),
   `salt` varchar(64),
   `status` int,
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint
 );
 
 CREATE TABLE `tb_user_info` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int,
+  `id` varchar(36) PRIMARY KEY,
+  `user_id` varchar(36),
   `f_name` varchar(255),
   `l_name` varchar(255),
   `email` varchar(255),
@@ -28,46 +28,46 @@ CREATE TABLE `tb_user_info` (
   `address` varchar(128),
   `postcode` int(32),
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint
 );
 
 CREATE TABLE `tb_user_role` (
-  `user_id` int,
-  `role_id` int
+  `user_id` varchar(36),
+  `role_id` varchar(36)
 );
 
 CREATE TABLE `tb_role` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` varchar(36) PRIMARY KEY,
   `name` varchar(128),
   `description` varchar(255),
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint
 );
 
 CREATE TABLE `tb_organization` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` varchar(36) PRIMARY KEY,
   `prent_id` int,
   `prent_ids` varchar(255),
   `name` varchar(128),
   `type` varchar(64),
   `description` varchar(255),
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint
@@ -84,92 +84,92 @@ CREATE TABLE `tb_role_permission` (
 );
 
 CREATE TABLE `tb_permission` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` varchar(36) PRIMARY KEY,
   `menu_id` int,
   `permission` varchar(255),
   `description` varchar(255),
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint
 );
 
 CREATE TABLE `tb_menu` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` varchar(36) PRIMARY KEY,
   `parent_id` int,
   `name` varchar(255),
   `description` varchar(255),
   `url` varchar(255),
   `order_by` int,
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint
 );
 
 CREATE TABLE `tb_country` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` varchar(36) PRIMARY KEY,
   `name` varchar(255),
   `code` varchar(32),
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint
 );
 
 CREATE TABLE `tb_state` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` varchar(36) PRIMARY KEY,
   `country_id` int,
   `name` varchar(255),
   `code` varchar(32),
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint
 );
 
 CREATE TABLE `tb_city` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` varchar(36) PRIMARY KEY,
   `state_id` int,
   `name` varchar(255),
   `code` varchar(32),
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint
 );
 
 CREATE TABLE `tb_sys_code` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` varchar(36) PRIMARY KEY,
   `parent_id` int,
   `code` varchar(64),
   `type` varchar(64),
   `description` varchar(255),
   `version` int,
-  `create_user` int,
+  `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
-  `update_user` int,
+  `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
   `is_del` tinyint

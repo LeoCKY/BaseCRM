@@ -1,4 +1,7 @@
 package com.cky.mapper;
 
-public interface OrganizationMapper {
+import com.cky.base.mapper.BaseMapper;
+import com.cky.model.system.entity.Organization;
+
+public interface OrganizationMapper extends BaseMapper<Organization, String> {
 }
