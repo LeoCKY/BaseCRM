@@ -7,7 +7,9 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="order_by" property="orderBy" jdbcType="INTEGER" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="menu_type" property="menuType" jdbcType="TINYINT" />
     <result column="version" property="version" jdbcType="INTEGER" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -19,8 +21,8 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, parent_id, name, description, url, order_by, version, create_user, create_date, 
-    create_ip, update_user, update_date, update_ip, is_del
+    id, parent_id, name, description, url, order_num, icon, menu_type, version, create_user, 
+    create_date, create_ip, update_user, update_date, update_ip, is_del
   </sql>
 
 </mapper>

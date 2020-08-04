@@ -30,6 +30,11 @@
             <version>1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.cky</groupId>
+            <artifactId>crm-sys</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 </project>

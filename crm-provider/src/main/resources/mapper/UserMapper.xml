@@ -6,8 +6,9 @@
     <result column="account" property="account" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
     <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="website_type" property="websiteType" jdbcType="TINYINT" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="create_ip" property="createIp" jdbcType="VARCHAR" />
@@ -18,8 +19,8 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, account, password, salt, status, version, create_user, create_date, create_ip, 
-    update_user, update_date, update_ip, is_del
+    id, account, password, salt, status, version, website_type, create_user, create_date, 
+    create_ip, update_user, update_date, update_ip, is_del
   </sql>
 
 </mapper>

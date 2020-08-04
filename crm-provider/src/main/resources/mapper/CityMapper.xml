@@ -3,7 +3,7 @@
 <mapper namespace="com.cky.mapper.CityMapper" >
   <resultMap id="BaseResultMap" type="com.cky.model.City" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="state_id" property="stateId" jdbcType="INTEGER" />
+    <result column="state_code" property="stateCode" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="version" property="version" jdbcType="INTEGER" />
@@ -17,7 +17,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, state_id, name, code, version, create_user, create_date, create_ip, update_user, 
+    id, state_code, name, code, version, create_user, create_date, create_ip, update_user, 
     update_date, update_ip, is_del
   </sql>
 

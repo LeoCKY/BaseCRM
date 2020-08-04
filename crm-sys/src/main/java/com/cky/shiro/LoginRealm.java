@@ -1,7 +1,10 @@
 package com.cky.shiro;
 
 
+import com.cky.base.user.CurrentMenu;
+import com.cky.base.user.CurrentRole;
 import com.cky.base.user.CurrentUser;
+import com.cky.model.system.entity.Permission;
 import com.cky.model.system.entity.User;
 import com.cky.util.BeanUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -11,18 +14,12 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/4.
- * @email 154040976@qq.com
- */
 @Service
 public class LoginRealm extends AuthorizingRealm {
 
@@ -51,16 +48,19 @@ public class LoginRealm extends AuthorizingRealm {
         } else {
             //根据用户获取角色 根据角色获取所有按钮权限
             CurrentUser cUser = (CurrentUser) Principal.getSession().getAttribute("currentPrincipal");
-//            for (CurrentRole cRole : cUser.getCurrentRoleList()) {
-//                info.addRole(cRole.getId());
-//            }
-//            for (CurrentMenu cMenu : cUser.getCurrentMenuList()) {
-//                if (!StringUtils.isEmpty(cMenu.getPermission())) {
-//                    info.addStringPermission(cMenu.getPermission());
-//                }
-//            }
-        }
+            for (CurrentRole cRole : cUser.getCurrentRoleList()) {
+                info.addRole(cRole.getId());
+            }
 
+            for (CurrentMenu cMenu : cUser.getCurrentMenuList()) {
+                List<String> permissions = cMenu.getPermission();
+                for (String p : permissions) {
+                    if (StringUtils.isNotBlank(p)) {
+                        info.addStringPermission(p);
+                    }
+                }
+            }
+        }
         return info;
     }
 

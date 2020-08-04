@@ -22,5 +22,4 @@
     update_user, update_date, update_ip, is_del
   </sql>
 
-
 </mapper>

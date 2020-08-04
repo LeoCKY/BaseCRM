@@ -5,22 +5,22 @@ CREATE TABLE `tb_user` (
   `salt` varchar(64),
   `status` tinyint,
   `version` int,
-  `website_type` tinyint,
+  `website_type` tinyint NOT NULL,
   `create_user` varchar(36),
   `create_date` timestamp,
   `create_ip` varchar(64),
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
 
 CREATE TABLE `tb_user_info` (
   `id` varchar(36) PRIMARY KEY,
   `user_id` varchar(36),
-  `f_name` varchar(255),
-  `l_name` varchar(255),
-  `email` varchar(255),
+  `f_name` varchar(255) NOT NULL,
+  `l_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `phone` varchar(255),
   `birthday` timestamp,
   `id_num` varchar(255),
@@ -35,7 +35,7 @@ CREATE TABLE `tb_user_info` (
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
 
 CREATE TABLE `tb_user_role` (
@@ -45,7 +45,7 @@ CREATE TABLE `tb_user_role` (
 
 CREATE TABLE `tb_role` (
   `id` varchar(36) PRIMARY KEY,
-  `name` varchar(128),
+  `name` varchar(128) NOT NULL,
   `description` varchar(255),
   `version` int,
   `create_user` varchar(36),
@@ -54,15 +54,15 @@ CREATE TABLE `tb_role` (
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
 
 CREATE TABLE `tb_organization` (
   `id` varchar(36) PRIMARY KEY,
   `prent_id` int,
   `prent_ids` varchar(255),
-  `name` varchar(128),
-  `type` varchar(64),
+  `name` varchar(128) NOT NULL,
+  `type` int default 0,
   `description` varchar(255),
   `version` int,
   `create_user` varchar(36),
@@ -71,17 +71,17 @@ CREATE TABLE `tb_organization` (
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
 
 CREATE TABLE `tb_org_permission` (
-  `org_id` int,
-  `permission_id` int
+  `org_id` varchar(36),
+  `permission_id` varchar(36)
 );
 
 CREATE TABLE `tb_role_permission` (
-  `role_id` int,
-  `permission_id` int
+  `role_id` varchar(36),
+  `permission_id` varchar(36)
 );
 
 CREATE TABLE `tb_permission` (
@@ -96,16 +96,18 @@ CREATE TABLE `tb_permission` (
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
 
 CREATE TABLE `tb_menu` (
   `id` varchar(36) PRIMARY KEY,
   `parent_id` int,
-  `name` varchar(255),
+  `name` varchar(255) NOT NULL,
   `description` varchar(255),
-  `url` varchar(255),
-  `order_by` int,
+  `url` varchar(255) NOT NULL,
+  `order_num` int,
+  `icon` varchar(255) DEFAULT NULL COMMENT '圖標',
+  `menu_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1.欄目 2.菜單',
   `version` int,
   `create_user` varchar(36),
   `create_date` timestamp,
@@ -113,13 +115,13 @@ CREATE TABLE `tb_menu` (
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
 
 CREATE TABLE `tb_country` (
   `id` varchar(36) PRIMARY KEY,
-  `name` varchar(255),
-  `code` varchar(32),
+  `name`  varchar(255) NOT NULL,
+  `code`  varchar(32) NOT NULL,
   `version` int,
   `create_user` varchar(36),
   `create_date` timestamp,
@@ -127,14 +129,14 @@ CREATE TABLE `tb_country` (
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
 
 CREATE TABLE `tb_state` (
   `id` varchar(36) PRIMARY KEY,
-  `country_id` int,
-  `name` varchar(255),
-  `code` varchar(32),
+  `country_cdoe` varchar(32) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `code` varchar(32) NOT NULL,
   `version` int,
   `create_user` varchar(36),
   `create_date` timestamp,
@@ -142,14 +144,14 @@ CREATE TABLE `tb_state` (
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
 
 CREATE TABLE `tb_city` (
   `id` varchar(36) PRIMARY KEY,
-  `state_id` int,
-  `name` varchar(255),
-  `code` varchar(32),
+  `state_code` varchar(32) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `code` varchar(32) NOT NULL,
   `version` int,
   `create_user` varchar(36),
   `create_date` timestamp,
@@ -157,7 +159,7 @@ CREATE TABLE `tb_city` (
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
 
 CREATE TABLE `tb_sys_code` (
@@ -173,8 +175,9 @@ CREATE TABLE `tb_sys_code` (
   `update_user` varchar(36),
   `update_date` timestamp,
   `update_ip` varchar(64),
-  `is_del` tinyint
+  `is_del` tinyint(2) default 0
 );
+
 
 ALTER TABLE `tb_user_info` ADD FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`id`);
 
