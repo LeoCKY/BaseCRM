@@ -7,16 +7,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * @author zhuxiaomeng
- * @date 2017/12/29.
- * @email 154040976@qq.com
- *
+/***
  * 验证码拦截
  */
-public class VerfityCodeFilter extends AccessControlFilter{
+public class VerifyCodeCodeFilter extends AccessControlFilter{
+
     /** 是否开启验证码验证   默认true*/
-    private boolean verfitiCode = true;
+    private boolean verifyCodeCode = true;
 
     /** 前台提交的验证码name*/
     private String jcaptchaParam = "code";
@@ -26,10 +23,10 @@ public class VerfityCodeFilter extends AccessControlFilter{
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object o) throws Exception {
-        request.setAttribute("verfitiCode", verfitiCode);//暂时未用到非验证码
+        request.setAttribute("verifyCodeCode", verifyCodeCode);//暂时未用到非验证码
         HttpServletRequest httpRequest = (HttpServletRequest)request;
         //2、判断验证码是否禁用 或不是表单提交
-        if (verfitiCode == false || !"post".equalsIgnoreCase(httpRequest.getMethod())) {
+        if (verifyCodeCode == false || !"post".equalsIgnoreCase(httpRequest.getMethod())) {
             return true;
         }
       Object code = getSubject(request, response).getSession().getAttribute("_code");
@@ -49,12 +46,13 @@ public class VerfityCodeFilter extends AccessControlFilter{
         return true;
     }
 
-    public boolean isVerfitiCode() {
-        return verfitiCode;
+
+    public boolean isVerifyCodeCode() {
+        return verifyCodeCode;
     }
 
-    public void setVerfitiCode(boolean verfitiCode) {
-        this.verfitiCode = verfitiCode;
+    public void setVerifyCodeCode(boolean verifyCodeCode) {
+        this.verifyCodeCode = verifyCodeCode;
     }
 
     public String getJcaptchaParam() {

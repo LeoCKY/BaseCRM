@@ -1,6 +1,8 @@
 package com.cky.config;
 
 
+import com.cky.filter.PermissionFilter;
+import com.cky.filter.VerifyCodeCodeFilter;
 import com.cky.shiro.LoginRealm;
 import com.cky.shiro.RetryLimitCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
@@ -85,9 +87,9 @@ public class ShiroConfig {
         DefaultWebSecurityManager dwm = new DefaultWebSecurityManager();
         List<Realm> loginRealms = new ArrayList<>();
 //        dwm.setAuthenticator(getMyModularRealmAuthenticator());
-//        loginRealm.setName("UserLogin");
+        loginRealm.setName("UserLogin");
 //        blogLoginRealm.setName("BlogLogin");
-//        loginRealms.add(loginRealm);
+        loginRealms.add(loginRealm);
 //        loginRealms.add(blogLoginRealm);
         dwm.setRealms(loginRealms);
         dwm.setCacheManager(getCacheManager());
@@ -95,24 +97,24 @@ public class ShiroConfig {
         return dwm;
     }
 
-//    @Bean
-//    public PermissionFilter getPermissionFilter() {
-//        return new PermissionFilter();
-//    }
+    @Bean
+    public PermissionFilter getPermissionFilter() {
+        return new PermissionFilter();
+    }
 
 //    @Bean
 //    public MyBasicHttpAuthenticationFilter getAuthenticationFilter() {
 //        return new MyBasicHttpAuthenticationFilter();
 //    }
 
-//    @Bean
-//    public VerfityCodeFilter getVerfityCodeFilter() {
-//        VerfityCodeFilter vf = new VerfityCodeFilter();
-//        vf.setFailureKeyAttribute("shiroLoginFailure");
-//        vf.setJcaptchaParam("code");
-//        vf.setVerfitiCode(true);
-//        return vf;
-//    }
+    @Bean
+    public VerifyCodeCodeFilter getVerfityCodeFilter() {
+        VerifyCodeCodeFilter vf = new VerifyCodeCodeFilter();
+        vf.setFailureKeyAttribute("shiroLoginFailure");
+        vf.setJcaptchaParam("code");
+        vf.setVerifyCodeCode(true);
+        return vf;
+    }
 
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
@@ -121,8 +123,8 @@ public class ShiroConfig {
         sfb.setLoginUrl("/login");
         sfb.setUnauthorizedUrl("/goLogin");
         Map<String, Filter> filters = new HashMap<>();
-//        filters.put("per", getPermissionFilter());
-//        filters.put("verCode", getVerfityCodeFilter());
+        filters.put("per", getPermissionFilter());
+        filters.put("verCode", getVerfityCodeFilter());
 //        filters.put("jwt", getAuthenticationFilter());
         sfb.setFilters(filters);
         Map<String, String> filterMap = new LinkedHashMap<>();
@@ -138,7 +140,7 @@ public class ShiroConfig {
         filterMap.put("/pdms/**", "anon");
 
         filterMap.put("/user/**", "per");
-        filterMap.put("/blog-admin/**", "jwt");
+//        filterMap.put("/blog-admin/**", "jwt");
         filterMap.put("/blog/**", "anon");
         filterMap.put("/**", "authc");
         sfb.setFilterChainDefinitionMap(filterMap);
