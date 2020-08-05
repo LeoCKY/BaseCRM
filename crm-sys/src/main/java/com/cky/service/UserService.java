@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    User login(String account);
+    User login(String account,String password);
 
     User selectByPrimaryKey(String id);
 

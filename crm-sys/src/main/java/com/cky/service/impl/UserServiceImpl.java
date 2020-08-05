@@ -4,6 +4,7 @@ import com.cky.dao.UserDAO;
 import com.cky.model.system.entity.User;
 import com.cky.model.system.entity.UserRole;
 import com.cky.service.UserService;
+import com.cky.util.Md5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,22 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Override
-    public User login(String account) {
+    public User login(String account, String loginPassword) {
         Example example = new Example(User.class);
         example.createCriteria().andEqualTo(account, "account");
-        return userDAO.selectOneByExample(example);
+        User user = userDAO.selectOneByExample(example);
+        if (user != null) {
+            String password = user.getPassword();
+            /**
+             * TODO
+             *  加密方式 : account + salt + password
+             */
+            String passwordMD5 = Md5Util.getMD5(loginPassword, user.getAccount());
+            if (password.equals(passwordMD5)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     @Override

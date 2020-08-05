@@ -6,6 +6,7 @@ import com.cky.base.user.CurrentRole;
 import com.cky.base.user.CurrentUser;
 import com.cky.model.system.entity.Permission;
 import com.cky.model.system.entity.User;
+import com.cky.service.UserService;
 import com.cky.util.BeanUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
@@ -14,6 +15,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,9 +25,8 @@ import java.util.Set;
 @Service
 public class LoginRealm extends AuthorizingRealm {
 
-//    @Autowired
-//    private SysUserService userService;
-
+    @Autowired
+    private UserService userService;
 
     /**
      * 获取授权
@@ -76,11 +77,11 @@ public class LoginRealm extends AuthorizingRealm {
             throws AuthenticationException {
         String username = (String) authenticationToken.getPrincipal();
         User s = null;
-//        try {
-//            s = userService.login(username);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            s = userService.login(username,"");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (s == null) {
             throw new UnknownAccountException("账户密码不正确");
         }
