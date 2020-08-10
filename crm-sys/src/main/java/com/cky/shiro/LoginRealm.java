@@ -78,7 +78,7 @@ public class LoginRealm extends AuthorizingRealm {
         String username = (String) authenticationToken.getPrincipal();
         User s = null;
         try {
-            s = userService.login(username,"");
+            s = userService.login(username);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,8 +87,7 @@ public class LoginRealm extends AuthorizingRealm {
         }
         CurrentUser user = new CurrentUser();
         BeanUtil.copyNotNullBean(s,user);
-//        user.setPassword(null);
-//        userService.setMenuAndRoles(username);
+        userService.setMenuAndRoles(username);
         ByteSource byteSource = ByteSource.Util.bytes(username);
         return new SimpleAuthenticationInfo(user, s.getPassword(), byteSource, getName());
     }

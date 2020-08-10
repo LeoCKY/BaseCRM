@@ -1,12 +1,22 @@
 package com.cky.controller;
 
 import com.cky.filter.VerifyCodeUtils;
+import com.cky.model.system.entity.User;
+import com.cky.service.UserService;
+import com.cky.shiro.Principal;
+import com.cky.util.CustomUsernamePasswordToken;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +26,10 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class LoginController {
 
+    @Autowired
+    UserService userService;
+
+    private static final String CODE_ERROR = "code.error";
 
     @GetMapping(value = "")
     public String loginInit() {
@@ -64,5 +78,42 @@ public class LoginController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 登录动作
+     *
+     * @param user
+     * @param model
+     * @param rememberMe
+     * @return
+     */
+    @ApiOperation(value = "/login", httpMethod = "POST", notes = "登录 method")
+    @PostMapping(value = "/login")
+    public String login(User user, Model model, String rememberMe, HttpServletRequest request) {
+        String codeMsg = (String) request.getAttribute("shiroLoginFailure");
+        if (CODE_ERROR.equals(codeMsg)) {
+            model.addAttribute("message", "验证码错误");
+            return "/login";
+        }
+        CustomUsernamePasswordToken token = new CustomUsernamePasswordToken(user.getAccount().trim(),
+                user.getPassword(), "UserLogin");
+        Subject subject = Principal.getSubject();
+        String msg = null;
+        try {
+            subject.login(token);
+            if (subject.isAuthenticated()) {
+                token.getUsername();
+                return "redirect:/main";
+            }
+        } catch (UnknownAccountException | IncorrectCredentialsException e) {
+            msg = "用户名/密码错误";
+        } catch (ExcessiveAttemptsException e) {
+            msg = "登录失败多次，账户锁定10分钟";
+        }
+        if (msg != null) {
+            model.addAttribute("message", msg);
+        }
+        return "/login";
     }
 }

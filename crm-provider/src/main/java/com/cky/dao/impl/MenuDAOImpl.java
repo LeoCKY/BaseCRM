@@ -28,7 +28,7 @@ public class MenuDAOImpl extends BaseDAOImpl<Menu, String> implements MenuDAO {
     @Override
     public List<Menu> getMenuNotSuper() {
         Example example = new Example(Menu.class);
-        example.createCriteria().andEqualTo("parentId", null);
+        example.createCriteria().andIsNull("parentId");
         return menuMapper.selectByExample(example);
     }
 

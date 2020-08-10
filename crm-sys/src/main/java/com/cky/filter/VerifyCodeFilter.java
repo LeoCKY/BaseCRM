@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 /***
  * 验证码拦截
  */
-public class VerifyCodeCodeFilter extends AccessControlFilter{
+public class VerifyCodeFilter extends AccessControlFilter{
 
     /** 是否开启验证码验证   默认true*/
     private boolean verifyCodeCode = true;

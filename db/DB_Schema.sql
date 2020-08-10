@@ -1,6 +1,6 @@
-CREATE TABLE `tb_user` (
+CREATE TABLE `tb_sys_user` (
   `id` varchar(36) PRIMARY KEY,
-  `account` varchar(255) unique,
+  `username` varchar(64) unique comment '登入名',
   `password` varchar(255),
   `salt` varchar(64),
   `status` tinyint,
@@ -15,7 +15,7 @@ CREATE TABLE `tb_user` (
   `is_del` tinyint(2) default 0
 );
 
-CREATE TABLE `tb_user_info` (
+CREATE TABLE `tb_sys_user_info` (
   `id` varchar(36) PRIMARY KEY,
   `user_id` varchar(36),
   `f_name` varchar(255) NOT NULL,
@@ -38,12 +38,12 @@ CREATE TABLE `tb_user_info` (
   `is_del` tinyint(2) default 0
 );
 
-CREATE TABLE `tb_user_role` (
+CREATE TABLE `tb_sys_user_role` (
   `user_id` varchar(36),
   `role_id` varchar(36)
 );
 
-CREATE TABLE `tb_role` (
+CREATE TABLE `tb_sys_role` (
   `id` varchar(36) PRIMARY KEY,
   `name` varchar(128) NOT NULL,
   `description` varchar(255),
@@ -57,7 +57,7 @@ CREATE TABLE `tb_role` (
   `is_del` tinyint(2) default 0
 );
 
-CREATE TABLE `tb_organization` (
+CREATE TABLE `tb_sys_organization` (
   `id` varchar(36) PRIMARY KEY,
   `prent_id` int,
   `prent_ids` varchar(255),
@@ -99,7 +99,7 @@ CREATE TABLE `tb_permission` (
   `is_del` tinyint(2) default 0
 );
 
-CREATE TABLE `tb_menu` (
+CREATE TABLE `tb_sys_menu` (
   `id` varchar(36) PRIMARY KEY,
   `parent_id` int,
   `name` varchar(255) NOT NULL,
@@ -108,6 +108,10 @@ CREATE TABLE `tb_menu` (
   `order_num` int,
   `icon` varchar(255) DEFAULT NULL COMMENT '圖標',
   `menu_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1.欄目 2.菜單',
+
+
+
+
   `version` int,
   `create_user` varchar(36),
   `create_date` timestamp,
@@ -134,7 +138,7 @@ CREATE TABLE `tb_country` (
 
 CREATE TABLE `tb_state` (
   `id` varchar(36) PRIMARY KEY,
-  `country_cdoe` varchar(32) NOT NULL,
+  `country_code` varchar(32) NOT NULL,
   `name` varchar(255) NOT NULL,
   `code` varchar(32) NOT NULL,
   `version` int,
@@ -147,20 +151,15 @@ CREATE TABLE `tb_state` (
   `is_del` tinyint(2) default 0
 );
 
-CREATE TABLE `tb_city` (
-  `id` varchar(36) PRIMARY KEY,
-  `state_code` varchar(32) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `code` varchar(32) NOT NULL,
-  `version` int,
-  `create_user` varchar(36),
-  `create_date` timestamp,
-  `create_ip` varchar(64),
-  `update_user` varchar(36),
-  `update_date` timestamp,
-  `update_ip` varchar(64),
-  `is_del` tinyint(2) default 0
-);
+CREATE TABLE IF NOT EXISTS `countries` (
+                                           `id` int(11) NOT NULL AUTO_INCREMENT,
+                                           `sortname` varchar(3) NOT NULL,
+                                           `name` varchar(150) NOT NULL,
+                                           `phonecode` int(11) NOT NULL,
+                                           PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=249 ;
+
+
 
 CREATE TABLE `tb_sys_code` (
   `id` varchar(36) PRIMARY KEY,
