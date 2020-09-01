@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cky.mapper.SysMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.cky.entity.SysMenu" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="permission" property="permission" jdbcType="VARCHAR" />
+    <result column="menu_type" property="menuType" jdbcType="TINYINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_ip" property="createIp" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="update_ip" property="updateIp" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="TINYINT" />
+  </resultMap>
+
+  <resultMap id="menuAndRoleMap" type="com.cky.entity.SysMenu">
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="permission" property="permission" jdbcType="VARCHAR" />
+    <result column="menu_type" property="menuType" jdbcType="TINYINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_ip" property="createIp" jdbcType="VARCHAR" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="update_ip" property="updateIp" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="TINYINT" />
+    <collection property="roleList" ofType="com.cky.entity.SysRole">
+      <id column="rid" jdbcType="VARCHAR" property="id" />
+      <result column="role_name" jdbcType="VARCHAR" property="name" />
+      <result column="description" jdbcType="VARCHAR" property="description" />
+    </collection>
+  </resultMap>
+
+  <select id="getMenuNotSuper" resultMap="BaseResultMap">
+    select
+    *
+    from tb_sys_menu where p_id is null and  menu_type=0 order by order_num asc
+  </select>
+  <select id="getMenuChildren" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from tb_sys_menu where p_id=#{id,jdbcType=VARCHAR} and  menu_type=0 order by order_num asc
+  </select>
+
+  <select id="getMenuChildrenAll" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from tb_sys_menu
+    where p_id=#{id,jdbcType=VARCHAR}
+    order by order_num asc
+  </select>
+
+  <select id="getUserMenu" parameterType="java.lang.String" resultMap="menuAndRoleMap">
+    select m.*,r.id as rid,r.name as role_name,r.description
+    from tb_sys_menu m
+    left join tb_sys_role_menu rm on m.id=rm.menu_id
+    left join tb_sys_role r on rm.role_id=r.id
+    left join tb_sys_role_user ru on r.id=ru.role_id
+    <where>
+       ru.user_id =#{id,jdbcType=VARCHAR}
+    </where>
+     order by m.order_num asc
+  </select>
+
+</mapper>

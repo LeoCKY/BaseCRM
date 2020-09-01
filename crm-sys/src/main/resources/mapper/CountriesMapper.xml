@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cky.mapper.CountriesMapper" >
+  <resultMap id="BaseResultMap" type="com.cky.entity.Countries" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="iso3" property="iso3" jdbcType="CHAR" />
+    <result column="iso2" property="iso2" jdbcType="CHAR" />
+    <result column="phone_code" property="phoneCode" jdbcType="VARCHAR" />
+    <result column="capital" property="capital" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="native" property="native" jdbcType="VARCHAR" />
+    <result column="emoji" property="emoji" jdbcType="VARCHAR" />
+    <result column="emojiU" property="emojiu" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.cky.entity.Countries" >
+    insert into tb_countries (id, name, iso3, 
+      iso2, phone_code, capital, 
+      currency, native, emoji, 
+      emojiU)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{iso3,jdbcType=CHAR}, 
+      #{iso2,jdbcType=CHAR}, #{phoneCode,jdbcType=VARCHAR}, #{capital,jdbcType=VARCHAR}, 
+      #{currency,jdbcType=VARCHAR}, #{native,jdbcType=VARCHAR}, #{emoji,jdbcType=VARCHAR}, 
+      #{emojiu,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cky.entity.Countries" >
+    insert into tb_countries
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="iso3 != null" >
+        iso3,
+      </if>
+      <if test="iso2 != null" >
+        iso2,
+      </if>
+      <if test="phoneCode != null" >
+        phone_code,
+      </if>
+      <if test="capital != null" >
+        capital,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="native != null" >
+        native,
+      </if>
+      <if test="emoji != null" >
+        emoji,
+      </if>
+      <if test="emojiu != null" >
+        emojiU,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="iso3 != null" >
+        #{iso3,jdbcType=CHAR},
+      </if>
+      <if test="iso2 != null" >
+        #{iso2,jdbcType=CHAR},
+      </if>
+      <if test="phoneCode != null" >
+        #{phoneCode,jdbcType=VARCHAR},
+      </if>
+      <if test="capital != null" >
+        #{capital,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="native != null" >
+        #{native,jdbcType=VARCHAR},
+      </if>
+      <if test="emoji != null" >
+        #{emoji,jdbcType=VARCHAR},
+      </if>
+      <if test="emojiu != null" >
+        #{emojiu,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

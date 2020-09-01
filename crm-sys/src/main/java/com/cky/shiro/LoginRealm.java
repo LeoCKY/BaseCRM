@@ -4,9 +4,8 @@ package com.cky.shiro;
 import com.cky.base.user.CurrentMenu;
 import com.cky.base.user.CurrentRole;
 import com.cky.base.user.CurrentUser;
-import com.cky.model.system.entity.Permission;
-import com.cky.model.system.entity.User;
-import com.cky.service.UserService;
+import com.cky.entity.SysUser;
+import com.cky.service.SysUserService;
 import com.cky.util.BeanUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
@@ -26,7 +25,7 @@ import java.util.Set;
 public class LoginRealm extends AuthorizingRealm {
 
     @Autowired
-    private UserService userService;
+    private SysUserService sysUserService;
 
     /**
      * 获取授权
@@ -76,9 +75,9 @@ public class LoginRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
         String username = (String) authenticationToken.getPrincipal();
-        User s = null;
+        SysUser s = null;
         try {
-            s = userService.login(username);
+            s = sysUserService.login(username);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,7 +86,7 @@ public class LoginRealm extends AuthorizingRealm {
         }
         CurrentUser user = new CurrentUser();
         BeanUtil.copyNotNullBean(s,user);
-        userService.setMenuAndRoles(username);
+        sysUserService.setMenuAndRoles(username);
         ByteSource byteSource = ByteSource.Util.bytes(username);
         return new SimpleAuthenticationInfo(user, s.getPassword(), byteSource, getName());
     }

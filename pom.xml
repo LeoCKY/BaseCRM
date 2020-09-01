@@ -11,9 +11,8 @@
     <modules>
         <module>crm-core</module>
         <module>crm-model</module>
-        <module>crm-provider</module>
-        <module>crm-web</module>
         <module>crm-sys</module>
+        <module>crm-web</module>
     </modules>
 
     <parent>

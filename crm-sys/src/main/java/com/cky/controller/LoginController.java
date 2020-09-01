@@ -1,8 +1,8 @@
 package com.cky.controller;
 
 import com.cky.filter.VerifyCodeUtils;
-import com.cky.model.system.entity.User;
-import com.cky.service.UserService;
+import com.cky.entity.SysUser;
+import com.cky.service.SysUserService;
 import com.cky.shiro.Principal;
 import com.cky.util.CustomUsernamePasswordToken;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
 
     @Autowired
-    UserService userService;
+    SysUserService sysUserService;
 
     private static final String CODE_ERROR = "code.error";
 
@@ -90,7 +90,7 @@ public class LoginController {
      */
     @ApiOperation(value = "/login", httpMethod = "POST", notes = "登录 method")
     @PostMapping(value = "/login")
-    public String login(User user, Model model, String rememberMe, HttpServletRequest request) {
+    public String login(SysUser user, Model model, String rememberMe, HttpServletRequest request) {
         String codeMsg = (String) request.getAttribute("shiroLoginFailure");
         if (CODE_ERROR.equals(codeMsg)) {
             model.addAttribute("message", "验证码错误");
@@ -114,6 +114,20 @@ public class LoginController {
         if (msg != null) {
             model.addAttribute("message", msg);
         }
+        return "/login";
+    }
+
+
+    @GetMapping("/main")
+    public String main() {
+        return "main/main";
+    }
+
+
+    @GetMapping(value = "/logout")
+    public String logout() {
+        Subject sub = SecurityUtils.getSubject();
+        sub.logout();
         return "/login";
     }
 }

@@ -19,11 +19,11 @@
 <body class="login-bg">
 
 <div class="login">
-    <div class="message">len-脚手架</div>
+    <div class="message">CKY - BaseCRM</div>
     <div id="darkbannerwrap"></div>
 
     <form method="post" action="${re.contextPath}/login" class="layui-form" >
-        <input name="username" placeholder="用户名" autocomplete="off"  type="text" lay-verify="username" class="layui-input" >
+        <input name="account" placeholder="用户名" autocomplete="off"  type="text" lay-verify="account" class="layui-input" >
         <hr class="hr15">
         <input name="password" lay-verify="password" placeholder="密码" autocomplete="off"  type="password" class="layui-input">
         <hr class="hr15">
@@ -54,7 +54,7 @@
     layui.use(['form','layer'], function(){
       var form = layui.form;
       form.verify({
-        username:function(v){
+          account:function(v){
           if(v.trim()==''){
             return "用户名不能为空";
           }
