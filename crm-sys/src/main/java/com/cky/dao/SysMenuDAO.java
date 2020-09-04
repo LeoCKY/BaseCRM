@@ -14,4 +14,6 @@ public interface SysMenuDAO extends BaseDAO<SysMenu, String> {
     List<SysMenu> getMenuChildren(String id);
 
     List<SysMenu> getUserMenu(String id);
+
+
 }

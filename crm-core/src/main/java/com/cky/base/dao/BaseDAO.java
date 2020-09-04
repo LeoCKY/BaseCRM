@@ -1,5 +1,6 @@
 package com.cky.base.dao;
 
+import com.cky.base.res.ReType;
 import org.apache.ibatis.session.RowBounds;
 
 import java.io.Serializable;
@@ -60,4 +61,6 @@ public interface BaseDAO<T, E extends Serializable> {
     public List<T> selectByRowBounds(T t, RowBounds rowBounds);
 
     public List<T> showAll(T t);
+
+    ReType show(T t, int page, int limit);
 }

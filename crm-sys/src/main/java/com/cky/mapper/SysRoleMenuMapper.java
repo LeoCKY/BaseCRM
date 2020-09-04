@@ -1,13 +1,14 @@
 package com.cky.mapper;
 
 
-import com.cky.entity.SysRoleMenuKey;
+import com.cky.base.mapper.BaseMapper;
+import com.cky.entity.SysRoleMenu;
 
-public interface SysRoleMenuMapper {
+public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu,String> {
 
-    int deleteByPrimaryKey(SysRoleMenuKey key);
+    int deleteByPrimaryKey(SysRoleMenu key);
 
-    int insert(SysRoleMenuKey record);
+    int insert(SysRoleMenu record);
 
-    int insertSelective(SysRoleMenuKey record);
+    int insertSelective(SysRoleMenu record);
 }

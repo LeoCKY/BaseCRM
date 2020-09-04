@@ -3,6 +3,7 @@ package com.cky.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.cky.dao.SysMenuDAO;
 import com.cky.entity.SysMenu;
+import com.cky.base.res.ResJSONBean;
 import com.cky.service.SysMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -36,7 +39,18 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Override
     public JSONArray getMenuJsonList() {
-        return null;
+        List<SysMenu> sysMenus = sysMenuDAO.selectAll();
+        List<SysMenu> supers = sysMenus.stream().filter(sysMenu ->
+                StringUtils.isEmpty(sysMenu.getParentId()))
+                .collect(Collectors.toList());
+        sysMenus.removeAll(supers);
+        supers.sort(Comparator.comparingInt(SysMenu::getOrderNum));
+        JSONArray jsonArr = new JSONArray();
+        for (SysMenu sysMenu : supers) {
+            SysMenu child = child(sysMenu, sysMenus, 0, 0);
+            jsonArr.add(child);
+        }
+        return jsonArr;
     }
 
     @Override
@@ -90,6 +104,33 @@ public class SysMenuServiceImpl implements SysMenuService {
             }
         }
         return menu;
+    }
 
+    public SysMenu child(SysMenu sysMenu, List<SysMenu> sysMenus, Integer pNum, Integer num) {
+        List<SysMenu> childSysMenu = sysMenus.stream().filter(s ->
+                s.getParentId().equals(sysMenu.getId())).collect(Collectors.toList());
+        sysMenus.removeAll(childSysMenu);
+        SysMenu m;
+        for (SysMenu menu : childSysMenu) {
+            ++num;
+            m = child(menu, sysMenus, pNum, num);
+            sysMenu.addChild(menu);
+        }
+        return sysMenu;
+    }
+
+    @Override
+    public ResJSONBean del(String id) {
+        return null;
+    }
+
+    @Override
+    public SysMenu selectByPrimaryKey(String id) {
+        return sysMenuDAO.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(SysMenu sysMenu) {
+        return sysMenuDAO.updateByPrimaryKeySelective(sysMenu);
     }
 }

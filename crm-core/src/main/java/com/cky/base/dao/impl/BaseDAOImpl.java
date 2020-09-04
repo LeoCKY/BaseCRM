@@ -3,9 +3,12 @@ package com.cky.base.dao.impl;
 
 import com.cky.base.dao.BaseDAO;
 import com.cky.base.mapper.BaseMapper;
+import com.cky.base.res.ReType;
 import com.cky.base.user.CurrentUser;
 import com.cky.util.CurrentUtil;
 import com.cky.util.DateUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 
@@ -251,14 +254,33 @@ public abstract class BaseDAOImpl<T, E extends Serializable> implements BaseDAO<
     @Override
     public List<T> showAll(T t) {
         List<T> tList = null;
-//        try {
-//            tList = getMappser().selectListByPage(t);
-//        } catch (Exception e) {
-//            logger.error("class:BaseServiceImpl ->method:show->message:" + e.getMessage());
-//            log.error("class:BaseServiceImpl ->method:show->message:" + e.getMessage());
-//            e.printStackTrace();
-//        }
-//        ReType reType = new ReType(  tList);
-        return tList;
+        try {
+            tList = getMapper().selectListByPage(t);
+        } catch (Exception e) {
+            log.error("class:BaseServiceImpl ->method:show->message:" + e.getMessage());
+            e.printStackTrace();
+        }
+         return tList;
+    }
+
+    /**
+     * 公共展示类
+     *
+     * @param t     实体
+     * @param page  页
+     * @param limit 行
+     * @return
+     */
+    @Override
+    public ReType show(T t, int page, int limit) {
+        List<T> tList = null;
+        Page<T> tPage = PageHelper.startPage(page, limit);
+        try {
+            tList = getMapper().selectListByPage(t);
+        } catch (Exception e) {
+            log.error("class:BaseServiceImpl ->method:show->message:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return new ReType(tPage.getTotal(), tList);
     }
 }

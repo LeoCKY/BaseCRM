@@ -2,7 +2,7 @@ package com.cky.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.cky.entity.SysMenu;
-
+import com.cky.base.res.ResJSONBean;
 
 import java.util.List;
 
@@ -25,4 +25,9 @@ public interface SysMenuService {
 
     public JSONArray getMenuJsonByUser(List<SysMenu> menuList);
 
+    public ResJSONBean del(String id);
+
+    SysMenu selectByPrimaryKey(String id);
+
+    Integer updateByPrimaryKeySelective(SysMenu sysMenu);
 }

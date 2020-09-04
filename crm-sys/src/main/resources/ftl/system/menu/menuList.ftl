@@ -93,6 +93,7 @@
       nodes:${menus},
       layout: layout
     });
+
     var $ = layui.$, active = {
         add: function () {
             add('添加菜单', 'showAddMenu', 700, 550);

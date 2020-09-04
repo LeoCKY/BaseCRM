@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 
@@ -13,9 +14,9 @@ import java.util.List;
 @ToString
 public class CurrentMenu implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String id;
+    private String id;
 
     private String name;
 
@@ -27,12 +28,24 @@ public class CurrentMenu implements Serializable {
 
     private String icon;
 
-    private List<String> permission;
+    private String createBy;
+
+    private Date createDate;
+
+    private String updateBy;
+
+    private Date updateDate;
+
+    private String permission;
 
     private Byte menuType;
+    /**
+     * 菜单排序id 填充菜单展示id
+     */
+    private int num;
 
 
-    public CurrentMenu(String id, String name, String parentId, String url, Integer orderNum, String icon, List<String> permission, Byte menuType) {
+    public CurrentMenu(String id, String name, String parentId, String url, Integer orderNum, String icon, String permission, Byte menuType, int num) {
         this.id = id;
         this.name = name;
         this.parentId = parentId;
@@ -41,6 +54,7 @@ public class CurrentMenu implements Serializable {
         this.icon = icon;
         this.permission = permission;
         this.menuType = menuType;
+        this.num = num;
     }
 
     public CurrentMenu() {

@@ -215,6 +215,7 @@ To change this template use File | Settings | File Templates.-->
      var index = parent.layer.getFrameIndex(window.name);
      parent.layer.close(index);
    });
+
     //监听提交
     form.on('submit(add)', function(data){
       data.field['icon']=$('#icon').text();

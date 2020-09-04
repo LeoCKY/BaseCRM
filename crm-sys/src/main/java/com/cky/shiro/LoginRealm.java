@@ -53,11 +53,8 @@ public class LoginRealm extends AuthorizingRealm {
             }
 
             for (CurrentMenu cMenu : cUser.getCurrentMenuList()) {
-                List<String> permissions = cMenu.getPermission();
-                for (String p : permissions) {
-                    if (StringUtils.isNotBlank(p)) {
-                        info.addStringPermission(p);
-                    }
+                if (!StringUtils.isEmpty(cMenu.getPermission())) {
+                    info.addStringPermission(cMenu.getPermission());
                 }
             }
         }
