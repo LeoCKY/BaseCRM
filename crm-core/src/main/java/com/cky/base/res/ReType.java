@@ -13,14 +13,22 @@ import java.util.Map;
  * 查询返回json格式依照ui默认属性名称
  */
 @Data
-public class ReType implements Serializable{
-    /**状态*/
-    public int code=0;
-    /**状态信息*/
-    public String msg="";
-    /**数据总数*/
+public class ReType implements Serializable {
+    /**
+     * 状态
+     */
+    public int code = 0;
+    /**
+     * 状态信息
+     */
+    public String msg = "";
+    /**
+     * 数据总数
+     */
     public long count;
-    /**页码*/
+    /**
+     * 页码
+     */
     public long pageNum;
 
     public List<?> data;
@@ -33,18 +41,19 @@ public class ReType implements Serializable{
         this.data = data;
     }
 
-    public ReType(long count,long pageNum, List<?> data) {
+    public ReType(long count, long pageNum, List<?> data) {
         this.count = count;
-        this.pageNum=pageNum;
+        this.pageNum = pageNum;
         this.data = data;
     }
 
     /**
      * 动态添加属性 map 用法可以参考 activiti 模块中 com.len.JsonTest 测试类中用法
+     *
      * @param count
      * @param data
      * @param map
-     * @param node 绑定节点字符串 这样可以更加灵活
+     * @param node  绑定节点字符串 这样可以更加灵活
      * @return
      */
     public static String jsonVal(long count, List<?> data, Map<String, Map<String, Object>> map, String node) {
