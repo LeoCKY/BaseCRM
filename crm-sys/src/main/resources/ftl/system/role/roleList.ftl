@@ -20,7 +20,7 @@
   <div class="select">
     角色名：
     <div class="layui-inline">
-      <input class="layui-input" height="20px" id="rolename" autocomplete="off">
+      <input class="layui-input" height="20px" id="name" autocomplete="off">
     </div>
     描述：
     <div class="layui-inline">
@@ -117,8 +117,8 @@
       , url: 'showRoleList'
       , cols: [[
         {checkbox: true, fixed: true, width: '5%'}
-        , {field: 'roleName', title: '角色名称', width: '20%', sort: true}
-        , {field: 'remark', title: '角色描述', width: '20%', sort: true}
+        , {field: 'name', title: '角色名称', width: '20%', sort: true}
+        , {field: 'description', title: '角色描述', width: '20%', sort: true}
         , {field: 'createDate', title: '创建时间', width: '20%',templet: '<div>{{ layui.laytpl.toDateString(d.createDate,"yyyy-MM-dd") }}</div>'}
         , {field: 'remark', title: '操作', width: '20%', toolbar: "#toolBar"}
       ]]
@@ -128,22 +128,22 @@
 
     var $ = layui.$, active = {
       select: function () {
-        var rolename = $('#rolename').val();
-        var remark = $('#remark').val();
+        var name = $('#name').val();
+        var description = $('#description').val();
         table.reload('roleList', {
           where: {
-            roleName: rolename,
-            remark: remark
+            name: name,
+            description: description
           }
         });
       },
       reload:function(){
-        $('#rolename').val('');
-       $('#remark').val('');
+        $('#name').val('');
+        $('#description').val('');
         table.reload('roleList', {
           where: {
-            roleName: null,
-            remark: null
+            name: null,
+            description: null
           }
         });
       },
@@ -180,7 +180,7 @@
       if (obj.event === 'detail') {
         detail('编辑角色', 'updateRole?id=' + data.id, 700, 450);
       } else if (obj.event === 'del') {
-        layer.confirm('确定删除角色[<label style="color: #00AA91;">' + data.roleName + '</label>]?', function(){
+        layer.confirm('确定删除角色[<label style="color: #00AA91;">' + data.name + '</label>]?', function(){
           del(data.id);
         });
       } else if (obj.event === 'edit') {

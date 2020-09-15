@@ -99,16 +99,19 @@
       , cols: [[
         {checkbox: true, fixed: true, width: '5%'}
         , {
-          field: 'username',
-          title: '用户名',
+          field: 'account',
+          title: '帳號',
           width: '10%',
           sort: true,
           style: 'background-color: #009688; color: #fff;'
         }
-        , {field: 'age', title: '年龄', width: '17%', sort: true}
-        , {field: 'realName', title: '真实姓名', width: '20%'}
-        , {field: 'email', title: '邮箱', width: '13%'}
-        , {field: 'photo', title: '头像', width: '13%', template: '#switchTpl'}
+        , {field: 'fName', title: '名', width: '6%'}
+        , {field: 'lName', title: '姓', width: '6%'}
+        , {field: 'email', title: '邮箱', width: '12%'}
+        , {field: 'birthday', title: '出生日', width: '10%', sort: true}
+        , {field: 'postcode', title: '郵遞號', width: '6%'}
+        , {field: 'address', title: '地址', width: '10%'}
+        // , {field: 'photo', title: '头像', width: '13%', template: '#switchTpl'}
         , {field: 'right', title: '操作', width: '20%', toolbar: "#barDemo"}
       ]]
       , page: true,
@@ -138,7 +141,7 @@
         });
       },
       add: function () {
-        add('添加用户', 'showAddUser', 700, 450);
+        add('添加用户', 'showAddUser', 700, 650);
       },
       update: function () {
         var checkStatus = table.checkStatus('userList')

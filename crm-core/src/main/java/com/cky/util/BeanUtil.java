@@ -1,5 +1,6 @@
 package com.cky.util;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -9,7 +10,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class BeanUtil {
+public class BeanUtil extends BeanUtils {
+
+
+    static {
+        ConvertUtils.register(new DateConvert(), java.util.Date.class);
+        ConvertUtils.register(new DateConvert(), String.class);
+    }
+
 
     public static String[] getNullPropertyNames(Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);

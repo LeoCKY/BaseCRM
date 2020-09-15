@@ -1,43 +1,73 @@
 package com.cky.service;
 
+import com.cky.base.res.ReType;
+import com.cky.base.res.ResJSONBean;
 import com.cky.entity.SysRoleUser;
 import com.cky.entity.SysUser;
+import com.cky.util.Checkbox;
+
 
 import java.util.List;
 
 public interface SysUserService {
 
-    SysUser login(String account);
+
+    SysUser login(String username);
+
 
     SysUser selectByPrimaryKey(String id);
 
     /**
-     * 新增
+     * 分页查询
      *
-     * @param sysUser
+     * @param
      * @return
      */
-    int add(SysUser sysUser);
+    List<SysUser> selectListByPage(SysUser sysUser);
+
+    int count();
+
+    /**
+     * 新增
+     *
+     * @param user
+     * @return
+     */
+    int add(SysUser user);
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     */
+    ResJSONBean delById(String id, boolean flag);
 
     int checkUser(String username);
 
-
     int updateByPrimaryKey(SysUser sysUser);
 
-    List<SysRoleUser> selectByCondition(SysRoleUser sysRoleUser);
+
+    List<Checkbox> getUserRoleByJson(String id);
 
     /**
      * 更新密码
      *
-     * @param SysUser
+     * @param user
      * @return
      */
-    int rePass(SysUser SysUser);
+    int rePass(SysUser user);
 
 
     List<SysUser> getUserByRoleId(String roleId);
 
-    void setMenuAndRoles(String username);
+    public void setMenuAndRoles(String username);
 
     void updateCurrent(SysUser SysUser);
+
+    ReType show(SysUser SysUser, int page, int limit);
+
+    int updateByPrimaryKeySelective(SysUser SysUser);
+
+    int insertSelective(SysUser sysUser);
 }

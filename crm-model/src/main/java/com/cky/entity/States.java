@@ -1,63 +1,68 @@
 package com.cky.entity;
 
-public class States {
-    private Integer id;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+/**
+ *  tb_states
+ * @author Leo Chen 2020-09-15
+ */
+@Entity
+@Data
+@Table(name="tb_states")
+@ApiModel("tb_states")
+public class States implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    /**
+     * id
+     */
+    @ApiModelProperty("id")
+    @Column(name="id")
+    private String id;
+
+    /**
+     * name
+     */
+    @ApiModelProperty("name")
+    @Column(name="name")
     private String name;
 
-    private Integer countryId;
+    /**
+     * countries_id
+     */
+    @ApiModelProperty("countries_id")
+    @Column(name="countries_id")
+    private String countriesId;
 
-    private String countryCode;
+    /**
+     * countries_code
+     */
+    @ApiModelProperty("countries_code")
+    @Column(name="countries_code")
+    private String countriesCode;
 
+    /**
+     * fips_code
+     */
+    @ApiModelProperty("fips_code")
+    @Column(name="fips_code")
     private String fipsCode;
 
+    /**
+     * iso2
+     */
+    @ApiModelProperty("iso2")
+    @Column(name="iso2")
     private String iso2;
 
-    public Integer getId() {
-        return id;
+    public States() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(Integer countryId) {
-        this.countryId = countryId;
-    }
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode == null ? null : countryCode.trim();
-    }
-
-    public String getFipsCode() {
-        return fipsCode;
-    }
-
-    public void setFipsCode(String fipsCode) {
-        this.fipsCode = fipsCode == null ? null : fipsCode.trim();
-    }
-
-    public String getIso2() {
-        return iso2;
-    }
-
-    public void setIso2(String iso2) {
-        this.iso2 = iso2 == null ? null : iso2.trim();
-    }
 }

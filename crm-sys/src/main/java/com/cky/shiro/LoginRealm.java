@@ -79,12 +79,12 @@ public class LoginRealm extends AuthorizingRealm {
             e.printStackTrace();
         }
         if (s == null) {
-            throw new UnknownAccountException("账户密码不正确");
+            throw new UnknownAccountException("The authentication information is incorrect");
         }
         CurrentUser user = new CurrentUser();
         BeanUtil.copyNotNullBean(s,user);
         sysUserService.setMenuAndRoles(username);
-        ByteSource byteSource = ByteSource.Util.bytes(username);
+        ByteSource byteSource = ByteSource.Util.bytes(username + s.getSalt());
         return new SimpleAuthenticationInfo(user, s.getPassword(), byteSource, getName());
     }
 }

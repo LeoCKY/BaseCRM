@@ -18,9 +18,58 @@
     <result column="update_ip" property="updateIp" jdbcType="VARCHAR" />
     <result column="is_del" property="isDel" jdbcType="TINYINT" />
   </resultMap>
+
+  <resultMap id="InfoResultMap" type="com.cky.vo.UserVO">
+      <id column="id" property="id" jdbcType="CHAR" />
+      <result column="account" property="account" jdbcType="VARCHAR" />
+      <result column="email" property="email" jdbcType="VARCHAR" />
+      <result column="status" property="status" jdbcType="TINYINT" />
+      <result column="website_type" property="websiteType" jdbcType="TINYINT" />
+      <result column="f_name" property="fName"/>
+      <result column="l_name" property="lName"/>
+      <result column="phone" property="phone"/>
+      <result column="birthday" property="birthday"/>
+      <result column="id_num" property="idNum"/>
+      <result column="countries_id" property="countriesId"/>
+      <result column="states_id" property="statesId"/>
+      <result column="cities_id" property="citiesId"/>
+      <result column="address" property="address"/>
+      <result column="postcode" property="postcode"/>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     id, account, password, salt, email, status, website_type, version, create_user, create_date, 
     create_ip, update_user, update_date, update_ip, is_del
   </sql>
+
+
+  <sql id="Info_Column_List">
+     u.id, account, password, salt, email, status, website_type, u.version, u.create_user, u.create_date,
+     u.create_ip, u.update_user, u.update_date, u.update_ip, u.is_del
+    ,info.id as info_id, user_id, f_name, l_name, phone, birthday, id_num, countries_id, states_id, cities_id, address, postcode
+  </sql>
+
+  <select id="selectListByPage" resultMap="InfoResultMap" parameterType="com.cky.entity.SysUser">
+        SELECT <include refid="Info_Column_List"/>
+        FROM tb_sys_user u
+        left join tb_sys_user_info info on u.id = info.user_id
+        <where>
+            and u.is_del = 0
+            <if test="id != null and id != ''">
+              and  u.id = #{id,jdbcType=CHAR}
+            </if>
+
+            <if test="email != null and email != ''">
+              and  u.email = #{email,jdbcType=VARCHAR}
+            </if>
+
+            <if test="userInfo != null">
+                <if test="userInfo.fName != null">
+                  and CONCAT(info.f_name, info.l_name ) LIKE CONCAT('%', #{userInfo.fName,jdbcType=VARCHAR} ,'%')
+                </if>
+            </if>
+        </where>
+        order by u.id
+  </select>
 
 </mapper>

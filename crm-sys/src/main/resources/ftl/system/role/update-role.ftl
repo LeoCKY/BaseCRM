@@ -1,7 +1,4 @@
 <#--Created by IntelliJ IDEA.
-User: zxm
-Date: 2017/12/20
-Time: 10:00
 To change this template use File | Settings | File Templates.-->
 
 <!DOCTYPE html>
@@ -62,6 +59,7 @@ To change this template use File | Settings | File Templates.-->
       var flag = '${detail}';
       if (flag) {
         $("form").disable();
+        $("#treeDemo").attr('disable',true);
       }
     });
   </script>
@@ -77,13 +75,13 @@ To change this template use File | Settings | File Templates.-->
         </fieldset>
       </div>
       <div class="layui-form-item">
-        <label for="roleName" class="layui-form-label">
+        <label for="name" class="layui-form-label">
           <span class="x-red">*</span>角色名称
         </label>
         <div class="layui-input-inline">
           <input value="${role.id}" type="hidden" name="id">
-          <input type="text" value="${role.roleName}" id="roleName" name="roleName"
-                 lay-verify="roleName"
+          <input type="text" value="${role.name}" id="name" name="name"
+                 lay-verify="name"
                  autocomplete="off" class="layui-input">
         </div>
         <div id="ms" class="layui-form-mid layui-word-aux">
@@ -96,7 +94,7 @@ To change this template use File | Settings | File Templates.-->
             <span class="x-red">*</span>角色备注
           </label>
           <div class="layui-input-inline">
-            <input type="text" value="${role.remark}" id="remark" name="remark" autocomplete="off"
+            <input type="text" value="${role.description}" id="description" name="description" autocomplete="off"
                    class="layui-input">
           </div>
         </div>
@@ -143,7 +141,7 @@ To change this template use File | Settings | File Templates.-->
 
     //自定义验证规则
     form.verify({
-      roleName: function (value) {
+      name: function (value) {
         if (value.trim() == "") {
           return "角色名不能为空";
         }

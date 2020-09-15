@@ -30,4 +30,5 @@ public interface SysMenuService {
     SysMenu selectByPrimaryKey(String id);
 
     Integer updateByPrimaryKeySelective(SysMenu sysMenu);
+
 }

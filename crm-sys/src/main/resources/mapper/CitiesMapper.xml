@@ -5,73 +5,23 @@
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="state_id" property="stateId" jdbcType="INTEGER" />
-    <result column="state_code" property="stateCode" jdbcType="VARCHAR" />
-    <result column="country_id" property="countryId" jdbcType="INTEGER" />
-    <result column="country_code" property="countryCode" jdbcType="CHAR" />
+    <result column="states_code" property="stateCode" jdbcType="VARCHAR" />
+    <result column="countries_id" property="countriesId" jdbcType="INTEGER" />
+    <result column="countries_code" property="countriesCode" jdbcType="CHAR" />
     <result column="latitude" property="latitude" jdbcType="DECIMAL" />
     <result column="longitude" property="longitude" jdbcType="DECIMAL" />
   </resultMap>
-  <insert id="insert" parameterType="com.cky.entity.Cities" >
-    insert into tb_cities (id, name, state_id, 
-      state_code, country_id, country_code, 
-      latitude, longitude)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{stateId,jdbcType=INTEGER}, 
-      #{stateCode,jdbcType=VARCHAR}, #{countryId,jdbcType=INTEGER}, #{countryCode,jdbcType=CHAR}, 
-      #{latitude,jdbcType=DECIMAL}, #{longitude,jdbcType=DECIMAL})
-  </insert>
-  <insert id="insertSelective" parameterType="com.cky.entity.Cities" >
-    insert into tb_cities
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="stateId != null" >
-        state_id,
-      </if>
-      <if test="stateCode != null" >
-        state_code,
-      </if>
-      <if test="countryId != null" >
-        country_id,
-      </if>
-      <if test="countryCode != null" >
-        country_code,
-      </if>
-      <if test="latitude != null" >
-        latitude,
-      </if>
-      <if test="longitude != null" >
-        longitude,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="stateId != null" >
-        #{stateId,jdbcType=INTEGER},
-      </if>
-      <if test="stateCode != null" >
-        #{stateCode,jdbcType=VARCHAR},
-      </if>
-      <if test="countryId != null" >
-        #{countryId,jdbcType=INTEGER},
-      </if>
-      <if test="countryCode != null" >
-        #{countryCode,jdbcType=CHAR},
-      </if>
-      <if test="latitude != null" >
-        #{latitude,jdbcType=DECIMAL},
-      </if>
-      <if test="longitude != null" >
-        #{longitude,jdbcType=DECIMAL},
-      </if>
-    </trim>
-  </insert>
+
+  <resultMap id="SelectMap" type="java.util.LinkedHashMap">
+    <result property="id" column="id"/>
+    <result property="name" column="name"/>
+  </resultMap>
+
+  <select id="selectMap" resultMap="SelectMap" parameterType="java.lang.String">
+    SELECT id, name
+    FROM tb_cities
+    WHERE states_id = #{stateId,jdbcType = VARCHAR}
+    ORDER BY name
+  </select>
+
 </mapper>

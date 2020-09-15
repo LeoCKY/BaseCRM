@@ -4,17 +4,21 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- *  tb_sys_user
+ * tb_sys_user
+ *
  * @author Leo Chen 2020-08-28
  */
 @Entity
 @Data
-@Table(name="tb_sys_user")
+@Table(name = "tb_sys_user")
 @ApiModel("tb_sys_user")
 public class SysUser implements Serializable {
 
@@ -126,4 +130,5 @@ public class SysUser implements Serializable {
     @Column(name = "is_del")
     private Boolean isDel;
 
+    private SysUserInfo userInfo;
 }

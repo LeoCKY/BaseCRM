@@ -72,11 +72,11 @@ public class SysUserInfo implements Serializable {
     private String idNum;
 
     /**
-     * country_id
+     * countries_id
      */
-    @ApiModelProperty("country_id")
-    @Column(name = "country_id")
-    private String countryId;
+    @ApiModelProperty("countries_id")
+    @Column(name = "countries_id")
+    private String countriesId;
 
     /**
      * states_id
@@ -86,11 +86,11 @@ public class SysUserInfo implements Serializable {
     private String statesId;
 
     /**
-     * city_id
+     * cities_id
      */
-    @ApiModelProperty("city_id")
-    @Column(name = "city_id")
-    private String cityId;
+    @ApiModelProperty("cities_id")
+    @Column(name = "cities_id")
+    private String cities;
 
     /**
      * address
@@ -104,7 +104,7 @@ public class SysUserInfo implements Serializable {
      */
     @ApiModelProperty("postcode")
     @Column(name = "postcode")
-    private Integer postcode;
+    private String postcode;
 
     /**
      * 版號

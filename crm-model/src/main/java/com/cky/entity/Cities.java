@@ -1,86 +1,84 @@
 package com.cky.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Cities {
+/**
+ * tb_cities
+ *
+ * @author Leo Chen 2020-09-15
+ */
+@Entity
+@Data
+@Table(name = "tb_cities")
+@ApiModel("tb_cities")
+public class Cities implements Serializable {
 
-    private Integer id;
+    private static final long serialVersionUID = 1L;
 
+    @Id
+    /**
+     * id
+     */
+    @ApiModelProperty("id")
+    @Column(name = "id")
+    private String id;
+
+    /**
+     * name
+     */
+    @ApiModelProperty("name")
+    @Column(name = "name")
     private String name;
 
-    private Integer stateId;
+    /**
+     * states_id
+     */
+    @ApiModelProperty("states_id")
+    @Column(name = "states_id")
+    private String statesId;
 
-    private String stateCode;
+    /**
+     * states_code
+     */
+    @ApiModelProperty("states_code")
+    @Column(name = "states_code")
+    private String statesCode;
 
-    private Integer countryId;
+    /**
+     * countries_id
+     */
+    @ApiModelProperty("countries_id")
+    @Column(name = "countries_id")
+    private String countriesId;
 
-    private String countryCode;
+    /**
+     * countries_code
+     */
+    @ApiModelProperty("countries_code")
+    @Column(name = "countries_code")
+    private String countriesCode;
 
+    /**
+     * latitude
+     */
+    @ApiModelProperty("latitude")
+    @Column(name = "latitude")
     private BigDecimal latitude;
 
+    /**
+     * longitude
+     */
+    @ApiModelProperty("longitude")
+    @Column(name = "longitude")
     private BigDecimal longitude;
 
-    public Integer getId() {
-        return id;
+    public Cities() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getStateId() {
-        return stateId;
-    }
-
-    public void setStateId(Integer stateId) {
-        this.stateId = stateId;
-    }
-
-    public String getStateCode() {
-        return stateCode;
-    }
-
-    public void setStateCode(String stateCode) {
-        this.stateCode = stateCode == null ? null : stateCode.trim();
-    }
-
-    public Integer getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(Integer countryId) {
-        this.countryId = countryId;
-    }
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode == null ? null : countryCode.trim();
-    }
-
-    public BigDecimal getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(BigDecimal latitude) {
-        this.latitude = latitude;
-    }
-
-    public BigDecimal getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(BigDecimal longitude) {
-        this.longitude = longitude;
-    }
 }

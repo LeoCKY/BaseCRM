@@ -38,9 +38,9 @@ CREATE TABLE `tb_sys_user_info`
     `phone`       varchar(255),
     `birthday`    timestamp,
     `id_num`      varchar(255),
-    `country_id`  varchar(32),
+    `countries_id`  varchar(32),
     `states_id`   varchar(32),
-    `city_id`     varchar(32),
+    `cities_id`     varchar(32),
     `address`     varchar(128),
     `postcode`    int(32),
     `version`     int        default 0 comment '版號',
@@ -55,7 +55,7 @@ CREATE TABLE `tb_sys_user_info`
   DEFAULT CHARSET = utf8;
 
 -- 管理員資料明細
-insert into `tb_sys_user_info` value ('acfc0e9232f54732a5d9ffe9071bf572', 'e0b141de1c8091be350d3fc80de66528', 'Leo',
+insert into `tb_sys_user_info` value ('acfc0e9232f54732a5d9ffe9071bf572', 'acfc0e9232f54732a5d9ffe9071bf572', 'Leo',
                                       'Chen', '0987654321', NOW(), 'H123456789', null, null, null, '火星路26號', '00001'
 , 0, 'acfc0e9232f54732a5d9ffe9071bf572', NOW(), '127.0.0.1','acfc0e9232f54732a5d9ffe9071bf572', NOW(), '127.0.0.1', 0);
 
@@ -271,8 +271,8 @@ create table tb_states
 (
     id           mediumint unsigned not null,
     name         varchar(255)       not null,
-    country_id   mediumint unsigned not null,
-    country_code char(2)            not null,
+    countries_id   mediumint unsigned not null,
+    countries_code char(2)            not null,
     fips_code    varchar(255)       null,
     iso2         varchar(255)       null
 ) ENGINE = InnoDB
@@ -284,10 +284,10 @@ create table tb_cities
 (
     id           mediumint unsigned not null,
     name         varchar(255)       not null,
-    state_id     mediumint unsigned not null,
-    state_code   varchar(255)       not null,
-    country_id   mediumint unsigned not null,
-    country_code char(2)            not null,
+    states_id     mediumint unsigned not null,
+    states_code   varchar(255)       not null,
+    countries_id   mediumint unsigned not null,
+    countries_code char(2)            not null,
     latitude     decimal(10, 8)     not null,
     longitude    decimal(11, 8)     not null
 ) ENGINE = InnoDB

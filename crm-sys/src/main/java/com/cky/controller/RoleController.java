@@ -3,15 +3,14 @@ package com.cky.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.cky.base.controller.BaseController;
 import com.cky.base.res.ReType;
-import com.cky.entity.SysRole;
 import com.cky.base.res.ResJSONBean;
+import com.cky.entity.SysRole;
 import com.cky.service.SysMenuService;
 import com.cky.service.SysRoleMenuService;
 import com.cky.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +49,6 @@ public class RoleController extends BaseController {
     @RequiresPermissions("role:show")
     public ReType showRoleList(SysRole role, Model model, String page, String limit) {
         ReType reType = roleService.show(role, Integer.valueOf(page), Integer.valueOf(limit));
-        System.err.println(ToStringBuilder.reflectionToString(reType));
         return reType;
     }
 

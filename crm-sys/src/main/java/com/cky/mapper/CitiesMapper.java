@@ -1,11 +1,12 @@
 package com.cky.mapper;
 
 
+import com.cky.base.mapper.BaseMapper;
 import com.cky.entity.Cities;
 
-public interface CitiesMapper {
+import java.util.Map;
 
-    int insert(Cities record);
+public interface CitiesMapper extends BaseMapper<Cities, String> {
 
-    int insertSelective(Cities record);
+    Map<String, String> selectMap(String statesId);
 }

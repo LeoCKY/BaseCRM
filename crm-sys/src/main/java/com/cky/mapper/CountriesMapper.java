@@ -1,11 +1,13 @@
 package com.cky.mapper;
 
 
+import com.cky.base.mapper.BaseMapper;
 import com.cky.entity.Countries;
 
-public interface CountriesMapper {
+import java.util.Map;
 
-    int insert(Countries record);
+public interface CountriesMapper extends BaseMapper<Countries, String> {
 
-    int insertSelective(Countries record);
+    Map<String,String> selectMap();
+
 }

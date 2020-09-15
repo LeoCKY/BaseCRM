@@ -199,7 +199,13 @@ public abstract class BaseDAOImpl<T, E extends Serializable> implements BaseDAO<
 
     @Override
     public List<T> selectByExample(Object o) {
-        return getMapper().selectByExample(o);
+        List<T> list =null;
+        try {
+            list = getMapper().selectByExample(o);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return list;
     }
 
 

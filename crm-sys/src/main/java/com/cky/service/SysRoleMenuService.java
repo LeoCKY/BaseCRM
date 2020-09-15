@@ -8,7 +8,11 @@ public interface SysRoleMenuService {
 
     int insert(SysRoleMenu sysRoleMenu);
 
+    int selectCountByCondition(SysRoleMenu sysRoleMenu);
+
     List<SysRoleMenu> selectByCondition(SysRoleMenu sysRoleMenu);
 
     int deleteByPrimaryKey(SysRoleMenu sysRoleMenu);
+
+    int selectCount(SysRoleMenu sysRoleMenu);
 }

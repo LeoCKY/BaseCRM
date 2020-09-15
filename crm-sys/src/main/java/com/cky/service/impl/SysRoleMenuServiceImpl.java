@@ -1,6 +1,5 @@
 package com.cky.service.impl;
 
-import com.cky.dao.SysRoleDAO;
 import com.cky.dao.SysRoleMenuDAO;
 import com.cky.entity.SysRoleMenu;
 import com.cky.service.SysRoleMenuService;
@@ -24,11 +23,21 @@ public class SysRoleMenuServiceImpl implements SysRoleMenuService {
 
     @Override
     public List<SysRoleMenu> selectByCondition(SysRoleMenu sysRoleMenu) {
-        return sysRoleMenuDAO.selectByExample(sysRoleMenu);
+        return sysRoleMenuDAO.select(sysRoleMenu);
     }
 
     @Override
     public int deleteByPrimaryKey(SysRoleMenu sysRoleMenu) {
         return sysRoleMenuDAO.deleteByPrimaryKey(sysRoleMenu);
+    }
+
+    @Override
+    public int selectCountByCondition(SysRoleMenu sysRoleMenu) {
+        return sysRoleMenuDAO.selectCount(sysRoleMenu);
+    }
+
+    @Override
+    public int selectCount(SysRoleMenu sysRoleMenu) {
+        return 0;
     }
 }

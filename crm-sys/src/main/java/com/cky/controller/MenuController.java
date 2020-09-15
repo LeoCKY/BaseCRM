@@ -87,7 +87,6 @@ public class MenuController extends BaseController {
 
     @GetMapping(value = "showUpdateMenu")
     public String showUpdateMenu(Model model, String id) {
-        System.err.println(" showUpdateMenu id : " + id);
         SysMenu sysMenu = sysMenuService.selectByPrimaryKey(id);
         JSONArray ja = sysMenuService.getMenuJsonList();
         model.addAttribute("menus", ja.toJSONString());

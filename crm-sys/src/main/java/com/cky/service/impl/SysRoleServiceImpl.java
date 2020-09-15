@@ -6,8 +6,10 @@ import com.cky.base.res.ResJSONBean;
 import com.cky.dao.SysRoleDAO;
 import com.cky.entity.SysRole;
 import com.cky.entity.SysRoleMenu;
+import com.cky.entity.SysRoleUser;
 import com.cky.service.SysRoleMenuService;
 import com.cky.service.SysRoleService;
+import com.cky.service.SysRoleUserService;
 import com.cky.util.BeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Autowired
     private SysRoleMenuService sysRoleMenuService;
+
+    @Autowired
+    private SysRoleUserService sysRoleUserService;
 
     @Override
     public SysRole selectByPrimaryKey(String id) {
@@ -45,14 +50,11 @@ public class SysRoleServiceImpl implements SysRoleService {
                     sysRoleMenuService.insert(sysRoleMenu);
                 }
             }
-
         } catch (Exception ex) {
             res.setMsg("保存失败");
             res.setFlag(false);
             log.error("SysRoleService error : {} ", ex.getMessage());
         }
-
-
         return res;
     }
 
@@ -117,7 +119,21 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Override
     public ResJSONBean del(String id) {
-        return null;
+        SysRoleUser sysRoleUser = new SysRoleUser();
+        sysRoleUser.setRoleId(id);
+        ResJSONBean j = new ResJSONBean();
+        try {
+            int count = sysRoleUserService.selectCountByCondition(sysRoleUser);
+            if (count > 0) {
+                return ResJSONBean.error("已分配给用户，删除失败");
+            }
+            deleteByPrimaryKey(id);
+            j.setMsg("删除成功");
+        } catch (Exception e) {
+            j.setMsg("删除失败");
+            j.setFlag(false);
+         }
+        return j;
     }
 
     @Override

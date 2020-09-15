@@ -138,6 +138,7 @@ public class ShiroConfig {
         filterMap.put("/logout", "logout");
         filterMap.put("/plugin/**", "anon");
         filterMap.put("/pdms/**", "anon");
+        filterMap.put("/place/**", "anon");
 
         filterMap.put("/user/**", "per");
 //        filterMap.put("/blog-admin/**", "jwt");

@@ -1,7 +1,4 @@
 <#--Created by IntelliJ IDEA.
-User: zxm
-Date: 2017/12/20
-Time: 10:00
 To change this template use File | Settings | File Templates.-->
 
 <!DOCTYPE html>
@@ -48,11 +45,11 @@ To change this template use File | Settings | File Templates.-->
       </fieldset>
     </div>
     <div class="layui-form-item">
-      <label for="roleName" class="layui-form-label">
+      <label for="name" class="layui-form-label">
         <span class="x-red">*</span>角色名称
       </label>
       <div class="layui-input-inline">
-        <input type="text"  id="roleName" name="roleName"  lay-verify="rolename"
+        <input type="text"  id="name" name="name"  lay-verify="name"
                autocomplete="off" class="layui-input">
       </div>
       <div id="ms" class="layui-form-mid layui-word-aux">
@@ -61,11 +58,11 @@ To change this template use File | Settings | File Templates.-->
     </div>
     <div class="layui-form-item">
     <div class="layui-inline">
-      <label for="remark" class="layui-form-label">
+      <label for="description" class="layui-form-label">
         <span class="x-red">*</span>角色备注
       </label>
       <div class="layui-input-inline">
-        <input type="text" id="remark" name="remark" lay-verify="remark"  autocomplete="off" class="layui-input">
+        <input type="text" id="description" name="description" lay-verify="description"  autocomplete="off" class="layui-input">
       </div>
     </div>
     </div>
@@ -76,7 +73,7 @@ To change this template use File | Settings | File Templates.-->
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label for="remark" class="layui-form-label">
+                <label for="description" class="layui-form-label">
                     <span class="x-red">*</span>权限选择
                 </label>
                 <div class="layui-input-inline">
@@ -109,7 +106,7 @@ To change this template use File | Settings | File Templates.-->
 
     //自定义验证规则
     form.verify({
-      rolename: function(value){
+      name: function(value){
         if(value.trim()==""){
           return "角色名不能为空";
         }

@@ -4,60 +4,22 @@
   <resultMap id="BaseResultMap" type="com.cky.entity.States" >
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="country_id" property="countryId" jdbcType="INTEGER" />
-    <result column="country_code" property="countryCode" jdbcType="CHAR" />
+    <result column="countries_id" property="countriesId" jdbcType="INTEGER" />
+    <result column="countries_code" property="countriesCode" jdbcType="CHAR" />
     <result column="fips_code" property="fipsCode" jdbcType="VARCHAR" />
     <result column="iso2" property="iso2" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="insert" parameterType="com.cky.entity.States" >
-    insert into tb_states (id, name, country_id, 
-      country_code, fips_code, iso2
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{countryId,jdbcType=INTEGER}, 
-      #{countryCode,jdbcType=CHAR}, #{fipsCode,jdbcType=VARCHAR}, #{iso2,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.cky.entity.States" >
-    insert into tb_states
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="countryId != null" >
-        country_id,
-      </if>
-      <if test="countryCode != null" >
-        country_code,
-      </if>
-      <if test="fipsCode != null" >
-        fips_code,
-      </if>
-      <if test="iso2 != null" >
-        iso2,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="countryId != null" >
-        #{countryId,jdbcType=INTEGER},
-      </if>
-      <if test="countryCode != null" >
-        #{countryCode,jdbcType=CHAR},
-      </if>
-      <if test="fipsCode != null" >
-        #{fipsCode,jdbcType=VARCHAR},
-      </if>
-      <if test="iso2 != null" >
-        #{iso2,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+
+  <resultMap id="SelectMap" type="java.util.LinkedHashMap">
+    <result property="id" column="id"/>
+    <result property="name" column="name"/>
+  </resultMap>
+
+  <select id="selectMap" resultMap="SelectMap" parameterType="java.lang.String">
+    SELECT id, name
+    FROM tb_states
+    WHERE countries_id = #{countriesId, jdbcType=VARCHAR}
+    ORDER BY name
+  </select>
+
 </mapper>
