@@ -100,7 +100,7 @@
             <span class="x-red">*</span>出生日
           </label>
           <div class="layui-input-inline">
-            <input type="text" class="layui-input" id="birthday" name="birthday" placeholder="yyyy-MM-dd">
+            <input type="text" class="layui-input" id="birthday" name="birthday" placeholder="yyyy-MM-dd HH:mm:ss">
           </div>
         </div>
 
@@ -130,8 +130,8 @@
           <label for="countries" class="layui-form-label">
             <span class="x-red"></span>國家
           </label>
-          <div class="layui-input-block">
-            <select name="countries" id="countries" lay-verify="countries"  lay-filter="countries">
+          <div class="layui-input-inline">
+            <select name="countriesId" id="countries" lay-verify="countries"  lay-filter="countries">
               <option value="">請選擇</option>
             </select>
           </div>
@@ -141,8 +141,8 @@
           <label for="states" class="layui-form-label">
             <span class="x-red"></span>省/區
           </label>
-          <div class="layui-input-block">
-            <select name="states" id="states" lay-verify="states"  lay-filter="states">
+          <div class="layui-input-inline">
+            <select name="statesId" id="states" lay-verify="states"  lay-filter="states">
               <option value="">請選擇</option>
             </select>
           </div>
@@ -155,7 +155,7 @@
             <span class="x-red"></span>城市
           </label>
           <div class="layui-input-block">
-            <select name="cities" id="cities" lay-verify="cities"  lay-filter="cities">
+            <select name="citiesId" id="cities" lay-verify="cities"  lay-filter="cities">
               <option value="">請選擇</option>
             </select>
           </div>
@@ -171,14 +171,12 @@
         </div>
       </div>
 
-
-
       <div class="layui-form-item">
         <div class="layui-inline">
           <label for="address" class="layui-form-label">
             <span class="x-red">*</span>地址
           </label>
-          <div class="layui-input-inline">
+          <div class="layui-input-block">
             <input type="text" id="address" name="address" lay-verify="address"  autocomplete="off" class="layui-input">
           </div>
         </div>
@@ -241,19 +239,6 @@
         });
       }
     });
-
-    $.ajax({
-      url: '/place/countries', async: false, type: 'get', success: function (data) {
-         if (data.flag) {
-
-         }
-      },beforeSend:function(){
-
-      }
-    });
-
-
-
   });
   layui.use(['form','layer','upload','laydate'], function(){
     $ = layui.jquery;
@@ -285,6 +270,7 @@
     laydate.render({
       elem: '#birthday'
       ,lang: 'en'
+      ,type: 'datetime'
       ,zIndex: 99999999
     });
 
@@ -326,6 +312,7 @@
       var index = parent.layer.getFrameIndex(window.name);
       parent.layer.close(index);
     });
+
     //監聽提交
     form.on('submit(add)', function(data){
       var r=document.getElementsByName("role");
@@ -340,7 +327,84 @@
       layerAjax('addUser', data.field, 'userList');
       return false;
     });
-    form.render();
+
+    $.ajax({
+      url: '/place/countries', async: false, type: 'get', success: function (data) {
+        if (data.flag) {
+          var countries = data.data;
+          for(var k in countries) {
+            $('#countries').append($('<option>', {
+              value: countries[k].id,
+              text: countries[k].name
+            }));
+          }
+          form.render('select');//  注意：数据赋值完成之后必须调用该方法，进行layui的渲染，否则数据出不来
+         }
+      },beforeSend:function(){
+      }
+    });
+
+    form.on('select(countries)', function(data){
+      $('#states').empty();
+      $('#cities').empty();
+      $('#states').append($('<option>', {
+        value: '',
+        text: '請選擇'
+      }));
+      $('#cities').append($('<option>', {
+        value: '',
+        text: '請選擇'
+      }));
+      form.render('select');//select是固定写法 不是选择器
+      if(data.value != ''){
+        $.ajax({
+          url: '/place/states/'+data.value, async: false, type: 'get', success: function (data) {
+            if (data.flag) {
+              var states = data.data;
+              for(var k in states) {
+                $('#states').append($('<option>', {
+                  value: states[k].id,
+                  text: states[k].name
+                }));
+              }
+              form.render('select');//  注意：数据赋值完成之后必须调用该方法，进行layui的渲染，否则数据出不来
+            }
+          },beforeSend:function(){
+          }
+        });
+      }
+    });
+
+    form.on('select(states)', function(data){
+      $('#cities').empty();
+      $('#cities').append($('<option>', {
+        value: '',
+        text: '請選擇'
+      }));
+      form.render('select');//select是固定写法 不是选择器
+      if(data.value != ''){
+        var countriesId = $('#countries').val();
+        var statesId = data.value;
+        var citiesUrl = '/place/cities/' + countriesId + '/' + statesId;
+        $.ajax({
+          url:  citiesUrl, async: false, type: 'get', success: function (data) {
+            if (data.flag) {
+              var cities = data.data;
+              for(var k in cities) {
+                $('#cities').append($('<option>', {
+                  value: cities[k].id,
+                  text: cities[k].name
+                }));
+              }
+              form.render('select');//  注意：数据赋值完成之后必须调用该方法，进行layui的渲染，否则数据出不来
+            }
+          },beforeSend:function(){
+          }
+        });
+      }
+    });
+      form.render();
+
   });
 </script>
 </body>

@@ -31,11 +31,11 @@ public class PlaceController extends BaseController {
         return res;
     }
 
-    @GetMapping(value = "/states/{countriesCode}")
-    public ResJSONBean getStates(@PathVariable("countriesCode") String countriesCode) {
+    @GetMapping(value = "/states/{countriesId}")
+    public ResJSONBean getStates(@PathVariable("countriesId") String countriesId) {
         ResJSONBean res = ResJSONBean.Success("");
         try {
-            res.setData(placeService.selectStatesByParentCode(countriesCode));
+            res.setData(placeService.selectStatesByParentId(countriesId));
         } catch (Exception ex) {
             log.error("getStates error : ", ex.getMessage());
             res = ResJSONBean.error(ex.getMessage());
@@ -43,11 +43,11 @@ public class PlaceController extends BaseController {
         return res;
     }
 
-    @GetMapping(value = "/cities/{countriesCode}/{statesCode}")
-    public ResJSONBean getCities(@PathVariable("countriesCode") String countriesCode, @PathVariable("statesCode") String statesCode) {
+    @GetMapping(value = "/cities/{countriesId}/{statesId}")
+    public ResJSONBean getCities(@PathVariable("countriesId") String countriesId, @PathVariable("statesId") String statesId) {
         ResJSONBean res = ResJSONBean.Success("");
         try {
-            res.setData(placeService.selectCitiesByParentCode(countriesCode, statesCode));
+            res.setData(placeService.selectCitiesByParentId(countriesId, statesId));
         } catch (Exception ex) {
             log.error("getCities error : ", ex.getMessage());
             res = ResJSONBean.error(ex.getMessage());

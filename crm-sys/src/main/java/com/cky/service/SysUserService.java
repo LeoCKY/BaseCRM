@@ -2,10 +2,9 @@ package com.cky.service;
 
 import com.cky.base.res.ReType;
 import com.cky.base.res.ResJSONBean;
-import com.cky.entity.SysRoleUser;
 import com.cky.entity.SysUser;
+import com.cky.entity.SysUserInfo;
 import com.cky.util.Checkbox;
-
 
 import java.util.List;
 
@@ -16,6 +15,8 @@ public interface SysUserService {
 
 
     SysUser selectByPrimaryKey(String id);
+
+    SysUserInfo selectInfoByUID(String uid);
 
     /**
      * 分页查询
@@ -70,4 +71,6 @@ public interface SysUserService {
     int updateByPrimaryKeySelective(SysUser SysUser);
 
     int insertSelective(SysUser sysUser);
+
+    int updateUserInfoByPrimaryKeySelective(SysUserInfo info);
 }

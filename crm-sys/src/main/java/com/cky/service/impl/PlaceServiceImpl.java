@@ -50,16 +50,16 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public List<States> selectStatesByParentCode(String countriesCode) {
+    public List<States> selectStatesByParentId(String countriesId) {
         Example example = new Example(States.class);
-        example.createCriteria().andEqualTo("countriesCode", countriesCode);
+        example.createCriteria().andEqualTo("countriesId", countriesId);
         return statesDAO.selectByExample(example);
     }
 
     @Override
-    public List<Cities> selectCitiesByParentCode(String countriesCode, String statesCode) {
+    public List<Cities> selectCitiesByParentId(String countriesId, String statesId) {
         Example example = new Example(Cities.class);
-        example.createCriteria().andEqualTo("countriesCode", countriesCode).andEqualTo("statesCode",statesCode);
+        example.createCriteria().andEqualTo("countriesId", countriesId).andEqualTo("statesId",statesId);
         return citiesDAO.selectByExample(example);
     }
 }

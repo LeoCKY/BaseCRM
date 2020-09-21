@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserVO {
 
-    private String id;
+    private String uid;
 
     private String account;
 
@@ -17,7 +17,11 @@ public class UserVO {
 
     private String fName;
 
+    private String firstName;
+
     private String lName;
+
+    private String lastName;
 
     private String phone;
 
@@ -35,11 +39,11 @@ public class UserVO {
 
     private String citiesId;
 
-    private String countries;
+    private String statesName;
 
-    private String states;
+    private String citiesName;
 
-    private String cities;
+    private String countriesName;
 
     private String password;
 

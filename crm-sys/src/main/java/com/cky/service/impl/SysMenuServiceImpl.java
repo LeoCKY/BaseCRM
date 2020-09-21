@@ -206,4 +206,6 @@ public class SysMenuServiceImpl implements SysMenuService {
     public Integer updateByPrimaryKeySelective(SysMenu sysMenu) {
         return sysMenuDAO.updateByPrimaryKeySelective(sysMenu);
     }
+
+
 }

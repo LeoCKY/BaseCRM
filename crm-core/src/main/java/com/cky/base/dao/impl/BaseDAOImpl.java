@@ -7,11 +7,15 @@ import com.cky.base.res.ReType;
 import com.cky.base.user.CurrentUser;
 import com.cky.util.CurrentUtil;
 import com.cky.util.DateUtil;
+import com.cky.util.IpUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -29,11 +33,11 @@ public abstract class BaseDAOImpl<T, E extends Serializable> implements BaseDAO<
 
     private static final String CREATE_IP = "create_ip";
 
-    private static final String UPDATE_USER = "update_user";
+    private static final String UPDATE_USER = "updateUser";
 
-    private static final String UPDATE_DATE = "update_date";
+    private static final String UPDATE_DATE = "updateDate";
 
-    private static final String UPDATE_IP = "update_ip";
+    private static final String UPDATE_IP = "updateIp";
 
     private static final String VERSION = "version";
 
@@ -92,7 +96,7 @@ public abstract class BaseDAOImpl<T, E extends Serializable> implements BaseDAO<
         CurrentUser currentUser = CurrentUtil.getUser();
         //統一處理公共欄位
         Class<?> clazz = record.getClass();
-        String operator, operateDate;
+        String operator, operateDate,operateIP;
         try {
             if (flag) {
                 //添加 id uuid支持
@@ -107,21 +111,29 @@ public abstract class BaseDAOImpl<T, E extends Serializable> implements BaseDAO<
                 }
                 operator = CREATE_USER;
                 operateDate = CREATE_DATE;
+                operateIP = CREATE_IP;
             } else {
                 operator = UPDATE_USER;
                 operateDate = UPDATE_DATE;
+                operateIP = UPDATE_IP;
             }
+            HttpServletRequest request =
+                    ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                            .getRequest();
             Field field = clazz.getDeclaredField(operator);
             field.setAccessible(true);
             field.set(record, currentUser.getId());
             Field fieldDate = clazz.getDeclaredField(operateDate);
             fieldDate.setAccessible(true);
             fieldDate.set(record, DateUtil.getCurrentTime());
-
+            Field fieldIP = clazz.getDeclaredField(operateIP);
+            fieldIP.setAccessible(true);
+            fieldIP.set(record, IpUtil.getIp(request));
         } catch (NoSuchFieldException e) {
             //無此欄位
+            log.error("BaseDAOImpl error : {}", e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error("BaseDAOImpl error : {}", e);
         }
         return record;
     }

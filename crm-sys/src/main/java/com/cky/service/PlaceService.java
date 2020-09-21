@@ -17,7 +17,7 @@ public interface PlaceService {
 
     List<Countries> selectCountriesAll();
 
-    List<States> selectStatesByParentCode(String countriesCode);
+    List<States> selectStatesByParentId(String countriesCode);
 
-    List<Cities> selectCitiesByParentCode(String countriesCode, String statesCode);
+    List<Cities> selectCitiesByParentId(String countriesCode, String statesCode);
 }

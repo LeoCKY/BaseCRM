@@ -22,6 +22,7 @@ import com.cky.util.Md5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,13 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public SysUser selectByPrimaryKey(String id) {
         return userDAO.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public SysUserInfo selectInfoByUID(String uid) {
+        Example example = new Example(SysUserInfo.class);
+        example.createCriteria().andEqualTo("userId", uid).andEqualTo("isDel", 0);
+        return userInfoDAO.selectOneByExample(example);
     }
 
     @Override
@@ -113,6 +121,7 @@ public class SysUserServiceImpl implements SysUserService {
         List<CurrentMenu> currentMenuList = new ArrayList<>();
         Set<SysRole> roleList = new HashSet<>();
         for (SysMenu m : menuList) {
+            System.err.println(ToStringBuilder.reflectionToString(m));
             CurrentMenu currentMenu = new CurrentMenu();
             BeanUtil.copyNotNullBean(m, currentMenu);
             currentMenuList.add(currentMenu);
@@ -244,5 +253,10 @@ public class SysUserServiceImpl implements SysUserService {
             userInfoDAO.insertSelective(info);
         }
         return 1;
+    }
+
+    @Override
+    public int updateUserInfoByPrimaryKeySelective(SysUserInfo info) {
+        return userInfoDAO.updateByPrimaryKeySelective(info);
     }
 }

@@ -248,11 +248,10 @@ CREATE TABLE `tb_sys_code`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-DROP TABLE IF EXISTS `tb_countries`;
-
+DROP TABLE IF EXISTS `tb_cities`;
 create table tb_countries
 (
-    id        mediumint unsigned,
+    id        mediumint PRIMARY KEY auto_increment,
     name      varchar(100) not null,
     iso3      char(3)      null,
     iso2      char(2)      null,

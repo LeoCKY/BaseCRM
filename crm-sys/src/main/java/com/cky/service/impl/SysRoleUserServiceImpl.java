@@ -33,6 +33,6 @@ public class SysRoleUserServiceImpl implements SysRoleUserService {
 
     @Override
     public int deleteByPrimaryKey(SysRoleUser sysRoleUser) {
-        return sysRoleUserDAO.deleteByPrimaryKey(sysRoleUserDAO);
+        return sysRoleUserDAO.delete(sysRoleUser);
     }
 }

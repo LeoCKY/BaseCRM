@@ -49,7 +49,7 @@
       <i class="layui-icon">&#xe608;</i>新增
     </button>
       </@shiro.hasPermission>
-    <@shiro.hasPermission name="user:select">
+    <@shiro.hasPermission name="user:update">
     <button class="layui-btn layui-btn-normal" data-type="update">
       <i class="layui-icon">&#xe642;</i>编辑
     </button>
@@ -105,12 +105,15 @@
           sort: true,
           style: 'background-color: #009688; color: #fff;'
         }
-        , {field: 'fName', title: '名', width: '6%'}
-        , {field: 'lName', title: '姓', width: '6%'}
+        , {field: 'lName', title: '名', width: '6%'}
+        , {field: 'fName', title: '姓', width: '6%', sort: true}
         , {field: 'email', title: '邮箱', width: '12%'}
-        , {field: 'birthday', title: '出生日', width: '10%', sort: true}
+        , {field: 'birthday', title: '出生日', width: '10%'}
+        , {field: 'countriesName', title: '國家', width: '10%'}
+        , {field: 'statesName', title: '地區', width: '10%'}
+        , {field: 'citiesName', title: '城市', width: '10%'}
         , {field: 'postcode', title: '郵遞號', width: '6%'}
-        , {field: 'address', title: '地址', width: '10%'}
+        , {field: 'address', title: '地址', width: '15%'}
         // , {field: 'photo', title: '头像', width: '13%', template: '#switchTpl'}
         , {field: 'right', title: '操作', width: '20%', toolbar: "#barDemo"}
       ]]
@@ -150,7 +153,7 @@
           layer.msg('请选择一行编辑,已选['+data.length+']行', {icon: 5});
           return false;
         }
-        update('编辑用户', 'updateUser?id=' + data[0].id, 700, 450);
+        update('编辑用户', 'updateUser?id=' + data[0].uid, 700, 450);
       },
       detail: function () {
         var checkStatus = table.checkStatus('userList')
@@ -159,7 +162,7 @@
           layer.msg('请选择一行查看,已选['+data.length+']行', {icon: 5});
           return false;
         }
-        detail('查看用户信息', 'updateUser?id=' + data[0].id, 700, 450);
+        detail('查看用户信息', 'updateUser?id=' + data[0].uid, 700, 450);
       },
       changePwd:function(){
         var checkStatus = table.checkStatus('userList')
@@ -168,7 +171,7 @@
           layer.msg('请选择一个用户,已选['+data.length+']行', {icon: 5});
           return false;
         }
-        rePwd('修改密码','goRePass?id='+data[0].id,500,350);
+        rePwd('修改密码','goRePass?id='+data[0].uid,500,350);
       }
     };
 

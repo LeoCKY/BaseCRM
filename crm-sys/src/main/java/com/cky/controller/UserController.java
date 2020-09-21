@@ -21,6 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -145,8 +146,10 @@ public class UserController extends BaseController {
         if (StringUtils.isNotEmpty(id)) {
             //用户-角色
             List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
-            SysUser user = userService.selectByPrimaryKey(id);
-            model.addAttribute("user", user);
+            SysUser example = new SysUser();
+            example.setId(id);
+            ReType reType =  userService.show(example, Integer.valueOf(0), Integer.valueOf(1));
+            model.addAttribute("user", reType.getData().get(0));
             model.addAttribute("boxJson", checkboxList);
         }
         model.addAttribute("detail", detail);
@@ -157,18 +160,20 @@ public class UserController extends BaseController {
 //    @Log(desc = "更新用户", type = LOG_TYPE.UPDATE)
     @PostMapping(value = "updateUser")
     @ResponseBody
-    public ResJSONBean updateUser(SysUser user, String role[]) {
+    public ResJSONBean updateUser(UserVO userVo, String role[]) {
         ResJSONBean jsonUtil = new ResJSONBean();
         jsonUtil.setFlag(false);
-        if (user == null) {
+        if (userVo == null) {
             jsonUtil.setMsg("获取数据失败");
             return jsonUtil;
         }
         try {
-            SysUser oldUser = userService.selectByPrimaryKey(user.getId());
-            BeanUtil.copyNotNullBean(user, oldUser);
+            SysUser oldUser = userService.selectByPrimaryKey(userVo.getUid());
+            BeanUtil.copyNotNullBean(userVo, oldUser);
             userService.updateByPrimaryKeySelective(oldUser);
-
+            SysUserInfo userInfo = userService.selectInfoByUID(userVo.getUid());
+            BeanUtil.copyNotNullBean(userVo, userInfo);
+            userService.updateUserInfoByPrimaryKeySelective(userInfo);
             SysRoleUser sysRoleUser = new SysRoleUser();
             sysRoleUser.setUserId(oldUser.getId());
             List<SysRoleUser> keyList = sysRoleUserService.selectByCondition(sysRoleUser);
@@ -183,9 +188,10 @@ public class UserController extends BaseController {
             }
             jsonUtil.setFlag(true);
             jsonUtil.setMsg("修改成功");
-            userService.updateCurrent(user);
+            userService.updateCurrent(oldUser);
         } catch (Exception e) {
-            log.error("updateUser error : {} " , e.getMessage());
+            log.error("updateUser error : {} ", e.getMessage());
+            e.printStackTrace();
         }
         return jsonUtil;
     }

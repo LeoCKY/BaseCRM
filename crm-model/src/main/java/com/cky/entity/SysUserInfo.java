@@ -90,7 +90,7 @@ public class SysUserInfo implements Serializable {
      */
     @ApiModelProperty("cities_id")
     @Column(name = "cities_id")
-    private String cities;
+    private String citiesId;
 
     /**
      * address
