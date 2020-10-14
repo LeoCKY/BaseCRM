@@ -22,9 +22,9 @@
 //@Configuration
 //public class WebMvcConfig extends WebMvcConfigurationSupport {
 //
-//    @Value("${lenosp.imagePath}")
+//    @Value("${upload.imagePath}")
 //    private String imagePath;
-//    @Value("${lenosp.uploadPath}")
+//    @Value("${upload.uploadPath}")
 //    private String filePath;
 //
 //    @Bean

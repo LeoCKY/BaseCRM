@@ -19,7 +19,7 @@ public interface SysUserService {
     SysUserInfo selectInfoByUID(String uid);
 
     /**
-     * 分页查询
+     * 分頁查詢
      *
      * @param
      * @return

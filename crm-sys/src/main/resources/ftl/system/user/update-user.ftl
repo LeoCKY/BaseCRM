@@ -11,15 +11,6 @@
   <script type="text/javascript" src="${re.contextPath}/plugin/layui/layui.all.js" charset="utf-8"></script>
   <script type="text/javascript" src="${re.contextPath}/plugin/tools/tool.js"></script>
   <script type="text/javascript" src="${re.contextPath}/plugin/tools/update-setting.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      var flag='${detail}';
-      if(flag){
-        $("form").disable();
-      }
-    });
-  </script>
-
 </head>
 
 <body>
@@ -37,7 +28,7 @@
           </div>
         </div>
         <div class="layui-input-inline">
-          <div  id="demo2" style="margin-top: 20px;margin-left: 50px">
+          <div id="demo2" style="margin-top: 20px;margin-left: 50px">
             <img src="/images/${re.contextPath}/${user.photo}" width="100px" height="100px" class="layui-upload-img layui-circle">
           </div>
 
@@ -199,9 +190,7 @@
   </form>
 </div>
 <script>
-   $(function(){
 
-  });
   layui.use(['form','layer','upload'], function(){
     $ = layui.jquery;
     var form = layui.form
@@ -229,12 +218,12 @@
     });
 
     // 出生日
-    // laydate.render({
-    //   elem: '#birthday'
-    //   ,lang: 'en'
-    //   ,type: 'datetime'
-    //   ,zIndex: 99999999
-    // });
+     laydate.render({
+       elem: '#birthday'
+       ,lang: 'en'
+       ,type: 'datetime'
+       ,zIndex: 99999999
+     });
 
     //自定義驗證規則
     form.verify({
@@ -286,37 +275,41 @@
     var statesId = '${user.statesId}';
     var citiesId = '${user.citiesId}';
 
-    $.ajax({
-      url: '/place/states/'+countriesId, async: false, type: 'get', success: function (data) {
-        if (data.flag) {
-          var states = data.data;
-          for(var k in states) {
-            $('#states').append($('<option>', {
-              value: states[k].id,
-              text: states[k].name
-            }));
+    if(countriesId != ''){
+      $.ajax({
+        url: '/place/states/'+countriesId, async: false, type: 'get', success: function (data) {
+          if (data.flag) {
+            var states = data.data;
+            for(var k in states) {
+              $('#states').append($('<option>', {
+                value: states[k].id,
+                text: states[k].name
+              }));
+            }
+            form.render('select');//  註意：數據賦值完成之後必須調用該方法，進行layui的渲染，否則數據出不來
           }
-          form.render('select');//  註意：數據賦值完成之後必須調用該方法，進行layui的渲染，否則數據出不來
+        },beforeSend:function(){
         }
-      },beforeSend:function(){
-      }
-    });
+      });
 
-    $.ajax({
-      url:  '/place/cities/' + countriesId + '/' + statesId , async: false, type: 'get', success: function (data) {
-        if (data.flag) {
-          var cities = data.data;
-          for(var k in cities) {
-            $('#cities').append($('<option>', {
-              value: cities[k].id,
-              text: cities[k].name
-            }));
+      if(statesId!=''){
+        $.ajax({
+          url:  '/place/cities/' + countriesId + '/' + statesId , async: false, type: 'get', success: function (data) {
+            if (data.flag) {
+              var cities = data.data;
+              for(var k in cities) {
+                $('#cities').append($('<option>', {
+                  value: cities[k].id,
+                  text: cities[k].name
+                }));
+              }
+              form.render('select');//  註意：數據賦值完成之後必須調用該方法，進行layui的渲染，否則數據出不來
+            }
+          },beforeSend:function(){
           }
-          form.render('select');//  註意：數據賦值完成之後必須調用該方法，進行layui的渲染，否則數據出不來
-        }
-      },beforeSend:function(){
+        });
       }
-    });
+    }
 
     if(countriesId != null && countriesId != ''){
       $('#countries option[value=${user.countriesId}]').attr('selected', 'selected');
@@ -390,7 +383,16 @@
       }
     });
 
+
+    var flag='${detail}';
+    if(flag){
+      $("form").disable();
+    }
     form.render();
+  });
+
+  $(document).ready(function() {
+
   });
 </script>
 </body>

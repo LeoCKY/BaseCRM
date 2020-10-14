@@ -207,5 +207,8 @@ public class SysMenuServiceImpl implements SysMenuService {
         return sysMenuDAO.updateByPrimaryKeySelective(sysMenu);
     }
 
-
+    @Override
+    public int insertSelective(SysMenu sysMenu) {
+        return sysMenuDAO.insertSelective(sysMenu);
+    }
 }

@@ -26,10 +26,10 @@ import java.util.Locale;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${lenosp.imagePath}")
+    @Value("${upload.imagePath}")
     private String imagePath;
 
-    @Value("${lenosp.uploadPath}")
+    @Value("${upload.uploadPath}")
     private String filePath;
 
 

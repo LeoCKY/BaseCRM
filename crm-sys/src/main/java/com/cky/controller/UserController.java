@@ -21,7 +21,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,12 +33,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 用户管理
+ * 用戶管理
  */
 //@Api(value="user")
 @Controller
 @RequestMapping(value = "/user")
-@Api(value = "用户管理",description="用户管理业务")
+@Api(value = "用戶管理",description="用戶管理業務")
 @Slf4j
 public class UserController extends BaseController {
 
@@ -52,11 +51,6 @@ public class UserController extends BaseController {
     @Autowired
     private SysRoleUserService sysRoleUserService;
 
-    @GetMapping(value = "mainTest")
-    @RequiresPermissions("user:show")
-    public String showTest() {
-        return "system/user/mainTest";
-    }
 
     @GetMapping(value = "showUser")
     @RequiresPermissions("user:show")
@@ -92,30 +86,30 @@ public class UserController extends BaseController {
         return "/system/user/add-user";
     }
 
-    @ApiOperation(value = "/addUser", httpMethod = "POST", notes = "添加用户")
-//    @Log(desc = "添加用户")
+    @ApiOperation(value = "/addUser", httpMethod = "POST", notes = "添加用戶")
+//    @Log(desc = "添加用戶")
     @PostMapping(value = "addUser")
     @ResponseBody
     public ResJSONBean addUser(UserVO userVO, String[] role) {
         if (userVO == null) {
-            return ResJSONBean.error("获取数据失败");
+            return ResJSONBean.error("獲取數據失敗");
         }
 
         if (StringUtils.isBlank(userVO.getFName()) || StringUtils.isBlank(userVO.getLName())) {
-            return ResJSONBean.error("用户名不能为空");
+            return ResJSONBean.error("用戶名不能為空");
         }
 
         if (StringUtils.isBlank(userVO.getPassword())) {
-            return ResJSONBean.error("密码不能为空");
+            return ResJSONBean.error("密碼不能為空");
         }
 
         if (role == null) {
-            return ResJSONBean.error("请选择角色");
+            return ResJSONBean.error("請選擇角色");
         }
 
         int result = userService.checkUser(userVO.getAccount());
         if (result > 0) {
-            return ResJSONBean.error("用户名已存在");
+            return ResJSONBean.error("用戶名已存在");
         }
 
         ResJSONBean j = new ResJSONBean();
@@ -135,7 +129,7 @@ public class UserController extends BaseController {
             j.setMsg("保存成功");
         } catch (Exception e) {
             log.error("addUser error : {}", e.getMessage());
-            j.setMsg("保存失败");
+            j.setMsg("保存失敗");
             j.setFlag(false);
         }
         return j;
@@ -144,7 +138,7 @@ public class UserController extends BaseController {
     @GetMapping(value = "updateUser")
     public String goUpdateUser(String id, Model model, boolean detail) {
         if (StringUtils.isNotEmpty(id)) {
-            //用户-角色
+            //用戶-角色
             List<Checkbox> checkboxList = userService.getUserRoleByJson(id);
             SysUser example = new SysUser();
             example.setId(id);
@@ -156,15 +150,15 @@ public class UserController extends BaseController {
         return "system/user/update-user";
     }
 
-    @ApiOperation(value = "/updateUser", httpMethod = "POST", notes = "更新用户")
-//    @Log(desc = "更新用户", type = LOG_TYPE.UPDATE)
+    @ApiOperation(value = "/updateUser", httpMethod = "POST", notes = "更新用戶")
+//    @Log(desc = "更新用戶", type = LOG_TYPE.UPDATE)
     @PostMapping(value = "updateUser")
     @ResponseBody
     public ResJSONBean updateUser(UserVO userVo, String role[]) {
         ResJSONBean jsonUtil = new ResJSONBean();
         jsonUtil.setFlag(false);
         if (userVo == null) {
-            jsonUtil.setMsg("获取数据失败");
+            jsonUtil.setMsg("獲取數據失敗");
             return jsonUtil;
         }
         try {
@@ -186,6 +180,7 @@ public class UserController extends BaseController {
                     roleUserService.insertSelective(sysRoleUser);
                 }
             }
+            oldUser.setUserInfo(userInfo);
             jsonUtil.setFlag(true);
             jsonUtil.setMsg("修改成功");
             userService.updateCurrent(oldUser);
@@ -196,8 +191,8 @@ public class UserController extends BaseController {
         return jsonUtil;
     }
 
-//    @Log(desc = "删除用户", type = LOG_TYPE.DEL)
-    @ApiOperation(value = "/del", httpMethod = "POST", notes = "删除用户")
+    //    @Log(desc = "刪除用戶", type = LOG_TYPE.DEL)
+    @ApiOperation(value = "/del", httpMethod = "POST", notes = "刪除用戶")
     @PostMapping(value = "/del")
     @ResponseBody
     @RequiresPermissions("user:del")
@@ -208,7 +203,7 @@ public class UserController extends BaseController {
     @GetMapping(value = "goRePass")
     public String goRePass(String id, Model model) {
         if (StringUtils.isEmpty(id)) {
-            return "获取账户信息失败";
+            return "獲取賬戶信息失敗";
         }
         SysUser user = userService.selectByPrimaryKey(id);
         model.addAttribute("user", user);
@@ -216,14 +211,14 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 修改密码
+     * 修改密碼
      *
      * @param id
      * @param pass
      * @param newPwd
      * @return
      */
-//    @Log(desc = "修改密码", type = LOG_TYPE.UPDATE)
+//    @Log(desc = "修改密碼", type = LOG_TYPE.UPDATE)
     @PostMapping(value = "rePass")
     @ResponseBody
     @RequiresPermissions("user:repass")
@@ -232,19 +227,18 @@ public class UserController extends BaseController {
         ResJSONBean j = new ResJSONBean();
         j.setFlag(false);
         if (flag) {
-            j.setMsg("获取数据失败，修改失败");
+            j.setMsg("獲取數據失敗，修改失敗");
             return j;
         }
         SysUser user = userService.selectByPrimaryKey(id);
-        newPwd = Md5Util.getMD5(user.getPassword().trim(), user.getAccount() + user.getSalt());
-        pass = Md5Util.getMD5(user.getPassword().trim(), user.getAccount() + user.getSalt());
+        newPwd = Md5Util.getMD5(pass, user.getAccount() + user.getSalt());
+        pass = Md5Util.getMD5(pass, user.getAccount() + user.getSalt());
         if (!pass.equals(user.getPassword())) {
-            j.setMsg("密码不正确");
+            j.setMsg("密碼不正確");
             return j;
         }
         if (newPwd.equals(user.getPassword())) {
-            j.setMsg("新密码不能与旧密码相同");
-
+            j.setMsg("新密碼不能與舊密碼相同");
             return j;
         }
         user.setPassword(newPwd);
@@ -253,7 +247,7 @@ public class UserController extends BaseController {
             j.setMsg("修改成功");
             j.setFlag(true);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("rePass error : {} ", e.getMessage());
         }
         return j;
     }
@@ -262,12 +256,12 @@ public class UserController extends BaseController {
     UploadUtil uploadUtil;
 
     /**
-     * 头像上传 目前首先相对路径
+     * 頭像上傳 目前首先相對路徑
      */
     @PostMapping(value = "upload")
     @ResponseBody
     public ResJSONBean imgUpload(HttpServletRequest req, @RequestParam("file") MultipartFile file,
-                              ModelMap model) {
+                                 ModelMap model) {
         String fileName = uploadUtil.upload(file);
         ResJSONBean j = new ResJSONBean();
         j.setMsg(fileName);
@@ -275,7 +269,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 验证用户名是否存在
+     * 驗證用戶名是否存在
      */
     @GetMapping(value = "checkUser")
     @ResponseBody
@@ -283,17 +277,15 @@ public class UserController extends BaseController {
         ResJSONBean j = new ResJSONBean();
         j.setFlag(Boolean.FALSE);
         if (StringUtils.isEmpty(uname)) {
-            j.setMsg("获取数据失败");
+            j.setMsg("獲取數據失敗");
             return j;
         }
         int result = userService.checkUser(uname);
         if (result > 0) {
-            j.setMsg("用户名已存在");
+            j.setMsg("用戶名已存在");
             return j;
         }
         j.setFlag(true);
         return j;
     }
-
-
 }

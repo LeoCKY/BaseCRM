@@ -40,6 +40,7 @@
       <result column="cities_name" property="citiesName"/>
       <result column="address" property="address"/>
       <result column="postcode" property="postcode"/>
+      <result column="photo" property="photo"/>
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -47,11 +48,10 @@
     create_ip, update_user, update_date, update_ip, is_del
   </sql>
 
-
   <sql id="Info_Column_List">
      u.id, account, password, salt, email, status, website_type, u.version, u.create_user, u.create_date,
      u.create_ip, u.update_user, u.update_date, u.update_ip, u.is_del
-    ,info.id as info_id, user_id, f_name, l_name, phone, birthday, id_num, address, postcode
+    ,info.id as info_id, user_id, f_name, l_name, phone, birthday, id_num, address, postcode, photo
     ,countries.id as countries_id , countries.name as countries_name
     ,states.id as states_id , states.name as states_name
     ,cities.id as cities_id , cities.name as cities_name

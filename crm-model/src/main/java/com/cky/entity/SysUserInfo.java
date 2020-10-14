@@ -107,6 +107,13 @@ public class SysUserInfo implements Serializable {
     private String postcode;
 
     /**
+     * photo
+     */
+    @ApiModelProperty("photo")
+    @Column(name = "photo")
+    private String photo;
+
+    /**
      * 版號
      */
     @ApiModelProperty("版號")

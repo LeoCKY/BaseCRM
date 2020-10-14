@@ -131,8 +131,7 @@ public abstract class BaseDAOImpl<T, E extends Serializable> implements BaseDAO<
             fieldIP.set(record, IpUtil.getIp(request));
         } catch (NoSuchFieldException e) {
             //無此欄位
-            log.error("BaseDAOImpl error : {}", e);
-        } catch (IllegalAccessException e) {
+         } catch (IllegalAccessException e) {
             log.error("BaseDAOImpl error : {}", e);
         }
         return record;

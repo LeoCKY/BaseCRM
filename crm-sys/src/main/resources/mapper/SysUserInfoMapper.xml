@@ -14,6 +14,7 @@
     <result column="cities_id" property="cities" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
     <result column="version" property="version" jdbcType="INTEGER" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -26,7 +27,7 @@
 
   <sql id="Base_Column_List" >
     id, user_id, f_name, l_name, phone, birthday, id_num, countries_id, states_id, cities_id,
-    address, postcode, version, create_user, create_date, create_ip, update_user, update_date, 
+    address, postcode,photo, version, create_user, create_date, create_ip, update_user, update_date,
     update_ip, is_del
   </sql>
 

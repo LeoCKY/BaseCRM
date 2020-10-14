@@ -43,6 +43,7 @@ CREATE TABLE `tb_sys_user_info`
     `cities_id`     varchar(32),
     `address`     varchar(128),
     `postcode`    int(32),
+    `photo` varchar(255) DEFAULT NULL,
     `version`     int        default 0 comment '版號',
     `create_user` varchar(36) comment '建立人',
     `create_date` timestamp comment '建立時間',
@@ -56,7 +57,7 @@ CREATE TABLE `tb_sys_user_info`
 
 -- 管理員資料明細
 insert into `tb_sys_user_info` value ('acfc0e9232f54732a5d9ffe9071bf572', 'acfc0e9232f54732a5d9ffe9071bf572', 'Leo',
-                                      'Chen', '0987654321', NOW(), 'H123456789', null, null, null, '火星路26號', '00001'
+                                      'Chen', '0987654321', NOW(), 'H123456789', null, null, null, '火星路26號', '00001', null
 , 0, 'acfc0e9232f54732a5d9ffe9071bf572', NOW(), '127.0.0.1','acfc0e9232f54732a5d9ffe9071bf572', NOW(), '127.0.0.1', 0);
 
 DROP TABLE IF EXISTS `tb_sys_role`;
@@ -98,8 +99,7 @@ DROP TABLE IF EXISTS `tb_sys_organization`;
 CREATE TABLE `tb_sys_organization`
 (
     `id`          char(36) PRIMARY KEY,
-    `prent_id`    int,
-    `prent_ids`   varchar(255),
+    `parent_id`   char(36) default null,
     `name`        varchar(128) NOT NULL,
     `type`        int        default 0,
     `description` varchar(255),

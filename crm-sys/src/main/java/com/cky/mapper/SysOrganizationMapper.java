@@ -1,18 +1,9 @@
 package com.cky.mapper;
 
 
+import com.cky.base.mapper.BaseMapper;
 import com.cky.entity.SysOrganization;
 
-public interface SysOrganizationMapper {
-    int deleteByPrimaryKey(String id);
+public interface SysOrganizationMapper extends BaseMapper<SysOrganization,String> {
 
-    int insert(SysOrganization record);
-
-    int insertSelective(SysOrganization record);
-
-    SysOrganization selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(SysOrganization record);
-
-    int updateByPrimaryKey(SysOrganization record);
 }

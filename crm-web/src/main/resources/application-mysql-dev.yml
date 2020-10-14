@@ -69,10 +69,9 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
 
-lenosp:
+upload:
   uploadPath: ./file/
   isDayType: false
-
   imagePath: ./image/
 
 logging:

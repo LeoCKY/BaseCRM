@@ -17,8 +17,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 /**
- * Created by meng on 2018/5/8.
- * 文件上传工具类
+ * 文件上傳工具類
  */
 @Getter
 @Setter
@@ -27,17 +26,17 @@ import java.util.UUID;
 public class UploadUtil {
 
     /**
-     * 按照当日创建文件夹
+     * 按照當日創建文件夾
      */
-//    @Value("${upload.isDayType}")
+    @Value("${upload.isDayType}")
     private boolean isDayType;
     /**
-     * 自定义文件路径
+     * 自定義文件路徑
      */
-//    @Value("${upload.uploadPath}")
+    @Value("${upload.uploadPath}")
     private String uploadPath;
 
-//    @Value("${upload.imagePath}")
+    @Value("${upload.imagePath}")
     private String imagePath;
 
     public static final String IMAGE_SUFFIX = "bmp,jpg,png,gif,jpeg";
@@ -48,7 +47,7 @@ public class UploadUtil {
 
     public String upload(MultipartFile multipartFile) {
         if (isNull(multipartFile)) {
-            throw new BusinessException("上传数据/地址获取异常");
+            throw new BusinessException("上傳數據/地址獲取異常");
         }
 
         LoadType loadType = fileNameStyle(multipartFile);
@@ -61,7 +60,7 @@ public class UploadUtil {
     }
 
     /**
-     * 格式化文件名 默认采用UUID
+     * 格式化文件名 默認採用UUID
      *
      * @return
      */
@@ -75,7 +74,7 @@ public class UploadUtil {
             index = 0;
             curr = UUID.randomUUID() + ".png";
         } else if (suffixLen == -1) {
-            throw new BusinessException("文件获取异常");
+            throw new BusinessException("文件獲取異常");
         }
         if (!flag) {
             String suffix = curr.substring(suffixLen, curr.length());
@@ -86,7 +85,7 @@ public class UploadUtil {
         }
         LoadType loadType = new LoadType();
         loadType.setFileName(curr);
-        //image 情况
+        //image 情況
         curr = StringUtils.isEmpty(imagePath) || index == -1 ?
                 uploadPath + File.separator + curr : imagePath + File.separator + curr;
         loadType.setCurrentFile(new File(curr));

@@ -2,12 +2,13 @@ package com.cky.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.cky.base.controller.BaseController;
-import com.cky.entity.SysMenu;
 import com.cky.base.res.ResJSONBean;
+import com.cky.entity.SysMenu;
 import com.cky.service.SysMenuService;
 import com.cky.util.BeanUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 菜单
+ * 菜單
  */
 @RequestMapping("/menu")
 @Controller
-@Api(value = "菜单管理",description="菜单业务处理")
+@Api(value = "菜單管理", description = "菜單業務處理")
+@Slf4j
 public class MenuController extends BaseController {
 
     @Autowired
@@ -35,7 +37,7 @@ public class MenuController extends BaseController {
      * @param model
      * @return
      */
-    @ApiOperation(value = "/showMenu", httpMethod = "GET", notes = "展示菜单")
+    @ApiOperation(value = "/showMenu", httpMethod = "GET", notes = "展示菜單")
     @GetMapping(value = "showMenu")
     @RequiresPermissions("menu:show")
     public String showMenu(Model model) {
@@ -51,15 +53,15 @@ public class MenuController extends BaseController {
         return "/system/menu/add-menu";
     }
 
-//    @Log(desc = "添加菜单", type = LOG_TYPE.UPDATE)
-    @ApiOperation(value = "/addMenu", httpMethod = "POST", notes = "添加菜单")
+    //    @Log(desc = "添加菜單", type = LOG_TYPE.UPDATE)
+    @ApiOperation(value = "/addMenu", httpMethod = "POST", notes = "添加菜單")
     @PostMapping(value = "addMenu")
     @ResponseBody
     public ResJSONBean addMenu(SysMenu sysMenu, Model model) {
         ResJSONBean jsonUtil = new ResJSONBean();
         jsonUtil.setFlag(false);
         if (sysMenu == null) {
-            jsonUtil.setMsg("获取数据失败");
+            jsonUtil.setMsg("獲取數據失敗");
             return jsonUtil;
         }
         if (StringUtils.isEmpty(sysMenu.getParentId())) {
@@ -76,11 +78,11 @@ public class MenuController extends BaseController {
             if (sysMenu.getMenuType() == 2) {
                 sysMenu.setMenuType((byte) 0);
             }
-//            sysMenuService.insertSelective(sysMenu);
+            sysMenuService.insertSelective(sysMenu);
             jsonUtil.setMsg("添加成功");
         } catch (Exception e) {
-            e.printStackTrace();
-            jsonUtil.setMsg("添加失败");
+            log.error("addMenu error : {} ", e);
+            jsonUtil.setMsg("添加失敗");
         }
         return jsonUtil;
     }
@@ -99,7 +101,7 @@ public class MenuController extends BaseController {
     }
 
 
-//    @Log(desc = "更新菜单", type = LOG_TYPE.ADD)
+    //    @Log(desc = "更新菜單", type = LOG_TYPE.ADD)
     @PostMapping(value = "updateMenu")
     @ResponseBody
     public ResJSONBean updateMenu(SysMenu sysMenu) {
@@ -109,7 +111,7 @@ public class MenuController extends BaseController {
         return ResJSONBean.Success("保存成功");
     }
 
-//    @Log(desc = "删除菜单", type = LOG_TYPE.DEL)
+    //    @Log(desc = "刪除菜單", type = LOG_TYPE.DEL)
     @PostMapping("/menu-del")
     @ResponseBody
     public ResJSONBean del(String id) {

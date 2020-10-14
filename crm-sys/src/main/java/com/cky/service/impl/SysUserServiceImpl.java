@@ -108,10 +108,12 @@ public class SysUserServiceImpl implements SysUserService {
         SysUser s = new SysUser();
         s.setAccount(account);
         s = userDAO.selectOne(s);
-        CurrentUser currentUser = new CurrentUser(s.getId(), s.getAccount(), s.getEmail(), "", "", "");
+        SysUserInfo info = this.selectInfoByUID(s.getId());
+
+        CurrentUser currentUser = new CurrentUser(s.getId(), s.getAccount(), s.getEmail(), info.getPhoto(), info.getFName(), info.getLName());
         Subject subject = Principal.getSubject();
-        /*角色权限封装进去*/
-        //根据用户获取菜单
+        /*角色權限封裝進去*/
+        //根據用戶獲取菜單
         Session session = subject.getSession();
 
         List<SysMenu> menuList = menuService.getUserMenu(s.getId());
@@ -121,7 +123,6 @@ public class SysUserServiceImpl implements SysUserService {
         List<CurrentMenu> currentMenuList = new ArrayList<>();
         Set<SysRole> roleList = new HashSet<>();
         for (SysMenu m : menuList) {
-            System.err.println(ToStringBuilder.reflectionToString(m));
             CurrentMenu currentMenu = new CurrentMenu();
             BeanUtil.copyNotNullBean(m, currentMenu);
             currentMenuList.add(currentMenu);
@@ -143,12 +144,11 @@ public class SysUserServiceImpl implements SysUserService {
     public void updateCurrent(SysUser sysUser) {
         CurrentUser principal = Principal.getPrincipal();
         if (principal.getId().equals(sysUser.getId())) {
-            //当前用户
+            //當前用戶
             CurrentUser currentUse = Principal.getCurrentUse();
             Session session = Principal.getSession();
-//            currentUse.setPhoto(sysUser.getPhoto());
+            currentUse.setPhoto(sysUser.getUserInfo().getPhoto());
             session.setAttribute(CurrentUtil.CURRENT_PRINCIPAL, currentUse);
-
         }
     }
 
@@ -165,22 +165,22 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public ResJSONBean delById(String id, boolean flag) {
         if (StringUtils.isEmpty(id)) {
-            return ResJSONBean.error("获取数据失败");
+            return ResJSONBean.error("獲取數據失敗");
         }
         ResJSONBean j = new ResJSONBean();
         try {
             SysUser sysUser = selectByPrimaryKey(id);
             if (ADMIN.equals(sysUser.getAccount())) {
-                return ResJSONBean.error("超管无法删除");
+                return ResJSONBean.error("超管無法刪除");
             }
             SysRoleUser roleUser = new SysRoleUser();
             roleUser.setUserId(id);
             int count = sysRoleUserService.selectCountByCondition(roleUser);
             if (count > 0) {
-                return ResJSONBean.error("账户已经绑定角色，无法删除");
+                return ResJSONBean.error("賬戶已經綁定角色，無法刪除");
             }
             if (flag) {
-                //逻辑
+                //邏輯
                 sysUser.setIsDel(true);
                 updateByPrimaryKeySelective(sysUser);
             } else {
@@ -190,9 +190,9 @@ public class SysUserServiceImpl implements SysUserService {
                 userInfoDAO.delete(info);
                 userDAO.deleteByPrimaryKey(id);
             }
-            j.setMsg("删除成功");
+            j.setMsg("刪除成功");
         } catch (Exception e) {
-            j.setMsg("删除失败");
+            j.setMsg("刪除失敗");
             j.setFlag(false);
             e.printStackTrace();
         }
@@ -240,12 +240,10 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public int insertSelective(SysUser sysUser) {
-
         String salt = RandomUtil.randomString(64);
         String pwd = Md5Util.getMD5(sysUser.getPassword().trim(), sysUser.getAccount() + salt);
         sysUser.setSalt(salt);
         sysUser.setPassword(pwd);
-
         userDAO.insertSelective(sysUser);
         SysUserInfo info = sysUser.getUserInfo();
         if (info != null) {

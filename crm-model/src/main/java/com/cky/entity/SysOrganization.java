@@ -1,146 +1,130 @@
 package com.cky.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class SysOrganization {
+/**
+ * tb_sys_organization
+ *
+ * @author Leo Chen 2020-09-24
+ */
+@Entity
+@Data
+@Table(name = "tb_sys_organization")
+@ApiModel("tb_sys_organization")
+public class SysOrganization implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * id
+     */
+    @Id
+    @ApiModelProperty("id")
+    @Column(name = "id")
     private String id;
 
-    private Integer prentId;
+    /**
+     * parent_id
+     */
+    @ApiModelProperty("parent_id")
+    @Column(name = "parent_id")
+    private String parentId;
 
-    private String prentIds;
-
+    /**
+     * name
+     */
+    @ApiModelProperty("name")
+    @Column(name = "name")
     private String name;
 
+    /**
+     * type
+     */
+    @ApiModelProperty("type")
+    @Column(name = "type")
     private Integer type;
 
+    /**
+     * description
+     */
+    @ApiModelProperty("description")
+    @Column(name = "description")
     private String description;
 
+    /**
+     * 版號
+     */
+    @ApiModelProperty("版號")
+    @Column(name = "version")
     private Integer version;
 
+    /**
+     * 建立人
+     */
+    @ApiModelProperty("建立人")
+    @Column(name = "create_user")
     private String createUser;
 
+    /**
+     * 建立時間
+     */
+    @ApiModelProperty("建立時間")
+    @Column(name = "create_date")
     private Date createDate;
 
+    /**
+     * 建立ip
+     */
+    @ApiModelProperty("建立ip")
+    @Column(name = "create_ip")
     private String createIp;
 
+    /**
+     * 更新人
+     */
+    @ApiModelProperty("更新人")
+    @Column(name = "update_user")
     private String updateUser;
 
+    /**
+     * 更新時間
+     */
+    @ApiModelProperty("更新時間")
+    @Column(name = "update_date")
     private Date updateDate;
 
+    /**
+     * 更新ip
+     */
+    @ApiModelProperty("更新ip")
+    @Column(name = "update_ip")
     private String updateIp;
 
-    private Byte isDel;
+    /**
+     * 0:未刪除;1:刪除
+     */
+    @ApiModelProperty("0:未刪除;1:刪除")
+    @Column(name = "is_del")
+    private boolean isDel;
 
-    public String getId() {
-        return id;
+    private List<SysOrganization> children = new ArrayList<>();
+
+    public void addChild(SysOrganization sysOrg) {
+        children.add(sysOrg);
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public SysOrganization() {
     }
 
-    public Integer getPrentId() {
-        return prentId;
-    }
-
-    public void setPrentId(Integer prentId) {
-        this.prentId = prentId;
-    }
-
-    public String getPrentIds() {
-        return prentIds;
-    }
-
-    public void setPrentIds(String prentIds) {
-        this.prentIds = prentIds == null ? null : prentIds.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser == null ? null : createUser.trim();
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreateIp() {
-        return createIp;
-    }
-
-    public void setCreateIp(String createIp) {
-        this.createIp = createIp == null ? null : createIp.trim();
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser == null ? null : updateUser.trim();
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public String getUpdateIp() {
-        return updateIp;
-    }
-
-    public void setUpdateIp(String updateIp) {
-        this.updateIp = updateIp == null ? null : updateIp.trim();
-    }
-
-    public Byte getIsDel() {
-        return isDel;
-    }
-
-    public void setIsDel(Byte isDel) {
-        this.isDel = isDel;
-    }
 }
